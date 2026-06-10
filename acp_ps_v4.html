@@ -1,0 +1,1285 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ACP Photoshop CC 完整備考系統 v2</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--bg:#12121a;--sf1:#1a1a26;--sf2:#22222e;--sf3:#2c2c3a;--bd:rgba(255,255,255,0.07);--bd2:rgba(255,255,255,0.14);--txt:#ddd8f0;--muted:#7070a0;--dim:#404060;--acc:#5b8dee;--ok:#4ecb71;--err:#e85252;--warn:#e0a030;--r:8px;--rl:12px}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--txt);font-family:-apple-system,'Segoe UI','PingFang TC','Microsoft JhengHei',sans-serif;font-size:15px;line-height:1.6;min-height:100vh}
+::-webkit-scrollbar{width:5px}::-webkit-scrollbar-track{background:var(--bg)}::-webkit-scrollbar-thumb{background:var(--sf3);border-radius:3px}
+kbd{display:inline-block;padding:1px 6px;border-radius:4px;background:var(--sf3);border:1px solid rgba(255,255,255,0.15);font-family:'Consolas',monospace;font-size:10px;color:var(--txt);box-shadow:0 1px 0 rgba(255,255,255,.1)}
+.navbar{height:56px;background:var(--sf1);border-bottom:1px solid var(--bd);display:flex;align-items:center;padding:0 20px;gap:14px;position:sticky;top:0;z-index:200}
+.nav-logo{width:36px;height:36px;border-radius:8px;background:linear-gradient(135deg,#2a5e9e,#1a3e7a);display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:800;color:#78b4ee;flex-shrink:0}
+.nav-title{font-size:13px;font-weight:600;white-space:nowrap}
+.nav-links{display:flex;gap:4px;margin-left:auto}
+.nav-btn{padding:6px 14px;border-radius:20px;border:1px solid var(--bd);background:transparent;color:var(--muted);font-size:12px;font-weight:500;cursor:pointer;transition:all .15s;white-space:nowrap}
+.nav-btn:hover{color:var(--txt);border-color:var(--bd2);background:var(--sf2)}
+.nav-btn.active{background:var(--acc);color:#fff;border-color:var(--acc)}
+.page{display:none}.page.active{display:block}
+.container{max-width:940px;margin:0 auto;padding:28px 18px}
+.block{margin-bottom:34px}
+.sec-hd{font-size:11px;font-weight:700;color:var(--muted);letter-spacing:.1em;text-transform:uppercase;display:flex;align-items:center;gap:10px;margin-bottom:14px}
+.sec-hd::after{content:'';flex:1;height:1px;background:var(--bd)}
+
+/* INTRO */
+.ps-mock{background:#2b2b2b;border-radius:var(--rl);border:1px solid #111;overflow:hidden;box-shadow:0 12px 40px rgba(0,0,0,.5);height:370px;display:flex;flex-direction:column;position:relative}
+.ps-bar{height:26px;background:#323232;border-bottom:1px solid #1a1a1a;display:flex;align-items:center;padding:0 8px;gap:1px;flex-shrink:0}
+.ps-mi{font-size:11px;color:#bbb;padding:2px 7px;border-radius:3px;cursor:pointer}
+.ps-mi:hover,.ps-mi.hl{background:#3c7eb5;color:#fff}
+.ps-optbar{height:26px;background:#3c3c3c;border-bottom:1px solid #1a1a1a;display:flex;align-items:center;padding:0 8px;gap:7px;flex-shrink:0}
+.ps-oi{font-size:10px;color:#aaa;background:#2e2e2e;border:1px solid #555;border-radius:3px;padding:1px 8px}
+.ps-main{flex:1;display:flex;overflow:hidden}
+.ps-toolbox{width:42px;background:#323232;border-right:1px solid #1a1a1a;display:flex;flex-direction:column;align-items:center;padding:5px 0;gap:1px;flex-shrink:0}
+.ps-t{width:30px;height:30px;border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:13px;cursor:pointer;color:#bbb}
+.ps-t:hover{background:#4a4a4a}.ps-t.on{background:#3c7eb5;color:#fff}
+.ps-sep{width:24px;height:1px;background:#555;margin:2px 0}
+.ps-canvas-area{flex:1;background:#4a4a4a;display:flex;align-items:center;justify-content:center;position:relative}
+.ps-canvas{width:190px;height:230px;background:#fff;box-shadow:6px 6px 24px rgba(0,0,0,.6);position:relative;overflow:hidden}
+.ps-canvas-bg{width:100%;height:100%;background:linear-gradient(135deg,#e8f4f8,#d4eaf4 40%,#a8c8e0)}
+.ps-shape{position:absolute;top:26px;left:26px;width:84px;height:64px;background:rgba(255,140,0,.45);border-radius:4px}
+.ps-ctext{position:absolute;bottom:34px;left:22px;font-size:13px;font-weight:700;color:#333}
+.ps-panels{width:210px;background:#323232;border-left:1px solid #1a1a1a;display:flex;flex-direction:column;overflow:hidden;flex-shrink:0}
+.ps-ph{height:26px;background:#3c3c3c;display:flex;align-items:center;padding:0 8px;font-size:11px;color:#ccc;cursor:pointer;justify-content:space-between;border-bottom:1px solid #1a1a1a}
+.ps-pb{padding:7px 8px;background:#2e2e2e}
+.ps-lyr-panel{flex:1;display:flex;flex-direction:column;overflow:hidden}
+.ps-lyr-opts{padding:4px 8px;display:flex;gap:4px;font-size:9px;color:#888;background:#2e2e2e;border-bottom:1px solid #1a1a1a;justify-content:space-between}
+.lyr-list{flex:1;padding:3px 5px;background:#2e2e2e;overflow:hidden}
+.lyr{display:flex;align-items:center;gap:5px;height:28px;padding:0 3px;border-radius:3px;cursor:pointer;font-size:10px;color:#bbb}
+.lyr:hover{background:#3a3a3a}.lyr.sel{background:#3c7eb5;color:#fff}
+.lyr-th{width:20px;height:20px;border-radius:2px;border:1px solid #555;flex-shrink:0}
+.lyr-btns{display:flex;justify-content:space-around;padding:4px;background:#2e2e2e;border-top:1px solid #1a1a1a}
+.lbtn{font-size:12px;color:#888;cursor:pointer;padding:0 3px}.lbtn:hover{color:#ccc}
+.ps-status{height:20px;background:#252525;border-top:1px solid #1a1a1a;display:flex;align-items:center;padding:0 8px;font-size:10px;color:#555;gap:16px;flex-shrink:0}
+.ann{position:absolute;width:22px;height:22px;border-radius:50%;background:#e05252;border:2px solid #fff;color:#fff;font-size:10px;font-weight:700;display:flex;align-items:center;justify-content:center;cursor:pointer;z-index:20;box-shadow:0 2px 8px rgba(0,0,0,.5);transition:transform .15s;user-select:none}
+.ann:hover{transform:scale(1.2)}.ann.on{background:#3c7eb5}
+.info-box{background:var(--sf1);border:1px solid var(--bd);border-radius:var(--rl);padding:14px 16px;margin-top:10px;min-height:78px}
+.info-box-title{font-size:14px;font-weight:600;margin-bottom:4px}
+.info-box-body{font-size:12px;color:var(--muted);line-height:1.65}
+.badge-row{display:flex;gap:5px;flex-wrap:wrap;margin-top:7px}
+.badge{font-size:11px;padding:2px 9px;border-radius:12px;background:rgba(91,141,238,.1);color:var(--acc);border:1px solid rgba(91,141,238,.3)}
+.gtabs{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:12px}
+.gtab{padding:5px 14px;border-radius:20px;border:1px solid var(--bd);background:var(--sf1);color:var(--muted);font-size:12px;font-weight:500;cursor:pointer;transition:all .15s}
+.gtab:hover{color:var(--txt)}.gtab.active{background:rgba(91,141,238,.12);color:var(--acc);border-color:rgba(91,141,238,.35)}
+.gsec{display:none}.gsec.active{display:block}
+.tool-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(175px,1fr));gap:7px}
+.tc{background:var(--sf1);border:1px solid var(--bd);border-radius:var(--r);padding:10px 12px;transition:border-color .15s}
+.tc:hover{border-color:var(--bd2)}.tc-head{display:flex;align-items:center;gap:7px;margin-bottom:4px;font-size:12px;font-weight:600}
+.tc-body{font-size:11px;color:var(--muted);line-height:1.55}
+.sc-wrap{border:1px solid var(--bd);border-radius:var(--rl);overflow:hidden}
+table.sc{width:100%;border-collapse:collapse;font-size:12px}
+table.sc th{background:var(--sf2);color:var(--muted);font-weight:600;padding:7px 12px;text-align:left;border-bottom:1px solid var(--bd)}
+table.sc td{padding:5px 12px;border-bottom:1px solid var(--bd);vertical-align:middle}
+table.sc tr:last-child td{border-bottom:none}
+table.sc tr:hover td{background:var(--sf1)}.sc-note{color:var(--muted);font-size:11px}
+.concept-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:8px}
+.cc{background:var(--sf1);border:1px solid var(--bd);border-radius:var(--rl);padding:12px 14px;transition:border-color .15s}
+.cc:hover{border-color:var(--bd2)}.cc-head{display:flex;align-items:center;gap:10px;margin-bottom:6px}
+.cc-icon{width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0}
+.cc-name{font-size:13px;font-weight:600}.cc-body{font-size:11px;color:var(--muted);line-height:1.6}
+
+/* QUESTIONS PAGE */
+.q-stats{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:18px}
+.stat-pill{padding:5px 14px;border-radius:20px;font-size:12px;font-weight:500;border:1px solid}
+.sp-all{background:rgba(91,141,238,.1);color:var(--acc);border-color:rgba(91,141,238,.3)}
+.sp-op{background:rgba(76,203,113,.1);color:var(--ok);border-color:rgba(76,203,113,.3)}
+.sp-cn{background:rgba(224,160,48,.1);color:var(--warn);border-color:rgba(224,160,48,.3)}
+.accordion{display:flex;flex-direction:column;gap:6px}
+.acc-item{background:var(--sf1);border:1px solid var(--bd);border-radius:var(--r);overflow:hidden;transition:border-color .15s}
+.acc-item:hover{border-color:var(--bd2)}
+.acc-head{display:flex;align-items:center;gap:9px;padding:11px 14px;cursor:pointer;user-select:none}
+.acc-num{width:26px;height:26px;border-radius:6px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700}
+.acc-num.op{background:rgba(76,203,113,.12);color:var(--ok)}.acc-num.cn{background:rgba(224,160,48,.12);color:var(--warn)}
+.acc-q{flex:1;font-size:13px;color:var(--txt);line-height:1.4}
+.acc-tag{font-size:10px;padding:2px 7px;border-radius:10px;border:1px solid;white-space:nowrap;flex-shrink:0}
+.tag-s{background:rgba(91,141,238,.1);color:var(--acc);border-color:rgba(91,141,238,.3)}
+.tag-m{background:rgba(232,82,82,.1);color:var(--err);border-color:rgba(232,82,82,.3)}
+.tag-t{background:rgba(160,100,220,.1);color:#c080ff;border-color:rgba(160,100,220,.3)}
+.tag-tf{background:rgba(76,203,113,.1);color:var(--ok);border-color:rgba(76,203,113,.3)}
+.acc-arr{color:var(--dim);font-size:11px;transition:transform .2s;flex-shrink:0}
+.acc-item.open .acc-arr{transform:rotate(90deg)}
+.acc-body{display:none;padding:0 14px 14px;border-top:1px solid var(--bd)}
+.acc-item.open .acc-body{display:block}
+.abi{padding-top:12px}
+.ans-box{background:rgba(76,203,113,.08);border:1px solid rgba(76,203,113,.25);border-radius:var(--r);padding:8px 12px;font-size:12px;color:var(--ok);margin-bottom:9px}
+.expl{font-size:12px;color:var(--muted);line-height:1.7;margin-bottom:9px}
+.steps-box{background:var(--sf2);border-radius:var(--r);padding:9px 12px}
+.steps-title{font-size:10px;font-weight:700;color:var(--acc);text-transform:uppercase;letter-spacing:.05em;margin-bottom:5px}
+.steps-list{list-style:none}.steps-list li{font-size:11px;color:var(--muted);padding:2px 0 2px 14px;position:relative}
+.steps-list li::before{content:'→';position:absolute;left:0;color:var(--acc);font-size:10px}
+.match-disp{width:100%;font-size:12px;margin-bottom:8px;border-collapse:collapse}
+.match-disp td{padding:3px 6px;border-bottom:1px solid var(--bd)}
+.match-disp td:first-child{color:var(--acc);font-weight:600;width:32%}
+.match-disp td:nth-child(2){color:var(--dim);text-align:center;width:20px}
+.opt-disp{list-style:none;margin-bottom:8px}
+.opt-disp li{font-size:12px;color:var(--muted);padding:2px 0}
+.opt-disp li.ok{color:var(--ok);font-weight:500}.opt-disp li.ok::before{content:'✓ '}
+.tf-disp{display:flex;flex-direction:column;gap:4px;margin-bottom:8px}
+.tf-disp-row{display:flex;align-items:center;gap:8px;font-size:12px}
+.tf-disp-badge{width:28px;flex-shrink:0;text-align:center;border-radius:4px;padding:1px 0;font-weight:700}
+.tf-disp-badge.ok{background:rgba(76,203,113,.15);color:var(--ok)}.tf-disp-badge.no{background:rgba(232,82,82,.15);color:var(--err)}
+.tf-disp-text{color:var(--muted)}
+
+/* EXAM */
+.exam-start{max-width:520px;margin:50px auto;text-align:center;padding:0 16px}
+.exam-logo{width:68px;height:68px;border-radius:16px;margin:0 auto 18px;background:linear-gradient(135deg,#2a5e9e,#1a3e7a);display:flex;align-items:center;justify-content:center;font-size:28px;font-weight:800;color:#78b4ee}
+.exam-start h2{font-size:22px;font-weight:700;margin-bottom:7px}
+.exam-start p{font-size:13px;color:var(--muted);line-height:1.7;margin-bottom:22px}
+.ei-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:24px}
+.ei-card{background:var(--sf1);border:1px solid var(--bd);border-radius:var(--r);padding:12px 8px;text-align:center}
+.ei-num{font-size:22px;font-weight:800;color:var(--acc)}.ei-lbl{font-size:11px;color:var(--muted);margin-top:1px}
+.btn-start{display:inline-block;padding:12px 36px;border-radius:24px;background:var(--acc);color:#fff;font-size:14px;font-weight:600;border:none;cursor:pointer;transition:all .15s}
+.btn-start:hover{background:#4a7de0;transform:translateY(-1px)}
+#exam-quiz{display:none}
+.qhdr{display:flex;align-items:center;gap:12px;margin-bottom:18px}
+.qprog-txt{font-size:12px;color:var(--muted);white-space:nowrap}
+.qprog-bar{flex:1;height:5px;background:var(--sf3);border-radius:3px;overflow:hidden}
+.qprog-fill{height:100%;background:var(--acc);border-radius:3px;transition:width .3s ease}
+.qscore{padding:4px 12px;border-radius:20px;font-size:11px;font-weight:600;background:rgba(76,203,113,.1);color:var(--ok);border:1px solid rgba(76,203,113,.3);white-space:nowrap}
+.qcard{background:var(--sf1);border:1px solid var(--bd);border-radius:var(--rl);padding:22px;position:relative;transition:all .2s}
+.qcard-num{font-size:11px;font-weight:700;color:var(--acc);letter-spacing:.08em;text-transform:uppercase;margin-bottom:6px}
+.qcard-text{font-size:14px;font-weight:500;line-height:1.65;margin-bottom:14px}
+.qcard-hint{font-size:11px;color:var(--warn);margin-bottom:10px}
+.opt-list-q{display:flex;flex-direction:column;gap:7px}
+.oq{width:100%;padding:9px 14px;border-radius:var(--r);background:var(--sf2);border:1px solid var(--bd);color:var(--txt);font-size:13px;text-align:left;cursor:pointer;transition:all .15s;display:flex;align-items:flex-start;gap:9px}
+.oq:hover{border-color:var(--acc);background:rgba(91,141,238,.07)}
+.oq.sel{border-color:var(--acc);background:rgba(91,141,238,.1)}
+.oq.ans-ok{border-color:var(--ok);background:rgba(76,203,113,.1);color:var(--ok)}
+.oq.ans-bad{border-color:var(--err);background:rgba(232,82,82,.1);color:var(--err)}
+.oq:disabled{cursor:default}
+.oq-lbl{width:20px;height:20px;border-radius:50%;background:var(--sf3);border:1px solid var(--bd);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;flex-shrink:0;margin-top:2px}
+.oq.sel .oq-lbl{background:var(--acc);border-color:var(--acc);color:#fff}
+.oq.ans-ok .oq-lbl{background:var(--ok);border-color:var(--ok);color:#fff}
+.oq.ans-bad .oq-lbl{background:var(--err);border-color:var(--err);color:#fff}
+.match-rows{display:flex;flex-direction:column;gap:7px}
+.mrow{display:flex;align-items:center;gap:9px}
+.mitem{background:rgba(91,141,238,.1);border:1px solid rgba(91,141,238,.3);border-radius:var(--r);padding:7px 10px;font-size:12px;color:var(--acc);font-weight:600;min-width:80px;flex-shrink:0;text-align:center}
+.mitem.enh{display:flex;align-items:center;gap:6px;padding:5px 8px}
+.mitem-icon{width:28px;height:20px;border-radius:3px;flex-shrink:0;overflow:hidden;border:1px solid rgba(255,255,255,.15);display:flex;align-items:center;justify-content:center;font-size:13px}
+.grad-swatch{width:100%;height:100%}
+.marr{color:var(--dim);flex-shrink:0}
+.msel{flex:1;padding:7px 10px;border-radius:var(--r);background:var(--sf2);border:1px solid var(--bd);color:var(--txt);font-size:12px;cursor:pointer;outline:none;transition:border-color .15s}
+.msel:focus{border-color:var(--acc)}.msel.m-ok{border-color:var(--ok);color:var(--ok)}.msel.m-bad{border-color:var(--err);color:var(--err)}
+.tf-rows{display:flex;flex-direction:column;gap:7px}
+.tfrow{display:flex;align-items:flex-start;gap:10px;padding:9px 12px;background:var(--sf2);border:1px solid var(--bd);border-radius:var(--r)}
+.tfrow-text{flex:1;font-size:12px;color:var(--txt);line-height:1.5}
+.tfrow-btns{display:flex;gap:5px;flex-shrink:0}
+.tfbtn{width:34px;height:26px;border-radius:5px;border:1px solid var(--bd);background:var(--sf3);color:var(--muted);font-size:11px;font-weight:700;cursor:pointer;transition:all .15s}
+.tfbtn:hover{border-color:var(--bd2);color:var(--txt)}
+.tfbtn.st{background:rgba(76,203,113,.18);border-color:var(--ok);color:var(--ok)}
+.tfbtn.sf{background:rgba(232,82,82,.18);border-color:var(--err);color:var(--err)}
+.confirm-area{margin-top:18px;text-align:center}
+.btn-confirm{padding:10px 32px;border-radius:24px;background:var(--acc);color:#fff;font-size:13px;font-weight:600;border:none;cursor:pointer;transition:all .15s}
+.btn-confirm:hover{background:#4a7de0}
+.btn-confirm:disabled{background:var(--sf3);color:var(--muted);cursor:not-allowed}
+.fb-area{display:none;margin-top:14px}
+.fb-area.show{display:block}
+.fb-banner{padding:12px 16px;border-radius:var(--r);margin-bottom:10px;display:flex;align-items:flex-start;gap:10px}
+.fb-ok{background:rgba(76,203,113,.08);border:1px solid rgba(76,203,113,.3)}
+.fb-bad{background:rgba(232,82,82,.08);border:1px solid rgba(232,82,82,.3)}
+.fb-emoji{font-size:20px;flex-shrink:0}
+.fb-title{font-size:14px;font-weight:700;margin-bottom:3px}
+.fb-ok .fb-title{color:var(--ok)}.fb-bad .fb-title{color:var(--err)}
+.fb-body{font-size:12px;color:var(--muted);line-height:1.65}
+.fb-correct{font-size:12px;color:var(--ok);margin-bottom:3px;font-weight:500}
+.btn-next{display:block;width:100%;padding:11px;border-radius:var(--r);background:var(--sf2);border:1px solid var(--bd2);color:var(--txt);font-size:13px;font-weight:600;cursor:pointer;transition:all .15s;text-align:center}
+.btn-next:hover{background:var(--sf3);border-color:var(--acc);color:var(--acc)}
+#exam-result{display:none;text-align:center;padding:40px 16px}
+.res-circle{width:110px;height:110px;border-radius:50%;margin:0 auto 18px;display:flex;flex-direction:column;align-items:center;justify-content:center;border:4px solid var(--acc);background:rgba(91,141,238,.08)}
+.res-num{font-size:34px;font-weight:800;color:var(--acc);line-height:1}
+.res-den{font-size:12px;color:var(--muted)}
+.res-h2{font-size:20px;font-weight:700;margin-bottom:6px}
+.res-msg{font-size:13px;color:var(--muted);margin-bottom:6px}
+.stars{font-size:28px;margin-bottom:20px}
+.wrongs-hd{font-size:12px;font-weight:700;color:var(--muted);margin-bottom:8px;text-align:left;max-width:480px;margin-left:auto;margin-right:auto}
+.wrong-list{display:flex;flex-direction:column;gap:5px;margin-bottom:22px;max-width:480px;margin-left:auto;margin-right:auto}
+.wrong-item{background:rgba(232,82,82,.07);border:1px solid rgba(232,82,82,.18);border-radius:var(--r);padding:7px 12px;font-size:12px;color:var(--muted);cursor:pointer;text-align:left;transition:all .15s}
+.wrong-item:hover{border-color:var(--err);color:var(--txt)}
+.res-btns{display:flex;gap:9px;justify-content:center;flex-wrap:wrap}
+.btn2{padding:9px 22px;border-radius:24px;border:1px solid var(--bd2);background:var(--sf2);color:var(--txt);font-size:12px;font-weight:500;cursor:pointer;transition:all .15s}
+.btn2:hover{background:var(--sf3);border-color:var(--acc);color:var(--acc)}
+
+/* ═══ Q-PAGE TABS ═══ */
+.qtabs{display:flex;gap:5px;margin-bottom:16px;flex-wrap:wrap}
+.qtab-btn{padding:8px 16px;border-radius:20px;border:1px solid var(--bd);background:var(--sf1);color:var(--muted);font-size:12px;font-weight:500;cursor:pointer;transition:all .15s}
+.qtab-btn:hover{color:var(--txt)}.qtab-btn.active{background:rgba(91,141,238,.12);color:var(--acc);border-color:rgba(91,141,238,.35)}
+.qtab-pane{display:none}.qtab-pane.active{display:block}
+
+/* ═══ SCOPE SELECTOR ═══ */
+.scope-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:22px}
+.scope-card{padding:14px 10px;border-radius:var(--rl);border:2px solid var(--bd);background:var(--sf1);text-align:center;cursor:pointer;transition:all .18s}
+.scope-card:hover{border-color:var(--bd2);background:var(--sf2)}
+.scope-card.active{border-color:var(--acc);background:rgba(91,141,238,.1)}
+.scope-icon{font-size:24px;margin-bottom:6px}
+.scope-title{font-size:13px;font-weight:600;margin-bottom:3px}
+.scope-card.active .scope-title{color:var(--acc)}
+.scope-sub{font-size:11px;color:var(--muted)}
+.scope-card.active .scope-sub{color:var(--acc);opacity:.8}
+.scope-count{font-size:20px;font-weight:800;color:var(--acc);margin-top:4px}
+.scope-card:not(.active) .scope-count{color:var(--muted)}
+.york-tag{display:inline-block;font-size:10px;padding:1px 7px;border-radius:8px;background:rgba(76,203,113,.1);color:var(--ok);border:1px solid rgba(76,203,113,.3);margin-left:5px}
+/* ═══ YORK SECOND SET ═══ */
+.york-progress{background:var(--sf1);border:1px solid var(--bd);border-radius:var(--rl);padding:10px 14px;margin-bottom:14px;display:flex;align-items:center;gap:12px}
+.york-prog-bar{flex:1;height:6px;background:var(--sf3);border-radius:3px;overflow:hidden}
+.york-prog-fill{height:100%;background:var(--ok);border-radius:3px;transition:width .4s ease}
+.york-prog-num{font-size:13px;font-weight:700;color:var(--ok);white-space:nowrap}
+.york-prog-lbl{font-size:11px;color:var(--muted)}
+.york-filters{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:12px}
+.yf{padding:4px 12px;border-radius:14px;border:1px solid var(--bd);background:var(--sf1);color:var(--muted);font-size:11px;cursor:pointer;transition:all .15s}
+.yf:hover{color:var(--txt)}.yf.active{background:rgba(91,141,238,.1);color:var(--acc);border-color:rgba(91,141,238,.3)}
+.nm-badge{display:inline-flex;align-items:center;font-size:9px;padding:1px 6px;border-radius:8px;background:rgba(91,141,238,.08);color:var(--acc);border:1px solid rgba(91,141,238,.25);flex-shrink:0}
+.york-steps{display:flex;flex-direction:column;gap:0;margin-bottom:9px}
+.york-step{display:flex;align-items:flex-start;gap:9px;padding:6px 0;border-bottom:1px solid var(--bd);font-size:12px;color:var(--muted);line-height:1.55}
+.york-step:last-child{border-bottom:none}
+.york-step-n{width:20px;height:20px;border-radius:50%;background:rgba(91,141,238,.1);color:var(--acc);font-size:10px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px}
+.york-tip{background:rgba(224,160,48,.07);border-left:3px solid var(--warn);border-radius:0 var(--r) var(--r) 0;padding:7px 11px;font-size:11px;color:var(--warn);margin-bottom:9px;line-height:1.6}
+.york-note{background:rgba(91,141,238,.06);border-left:3px solid var(--acc);border-radius:0 var(--r) var(--r) 0;padding:7px 11px;font-size:11px;color:var(--acc);margin-bottom:9px;line-height:1.6}
+.btn-mastered{margin-top:10px;padding:5px 14px;border-radius:14px;border:1px solid var(--ok);background:transparent;color:var(--ok);font-size:11px;cursor:pointer;transition:all .15s}
+.btn-mastered:hover{background:rgba(76,203,113,.1)}.btn-mastered.on{background:rgba(76,203,113,.15);font-weight:600}
+.york-cat-badge{display:inline-block;font-size:9px;padding:1px 7px;border-radius:8px;margin-right:5px;flex-shrink:0}
+.acc-item.york-hidden{display:none}
+
+/* ═══ SIM UI ═══ */
+.sim-wrap{border-radius:var(--rl);overflow:hidden;border:1px solid #111;margin-bottom:10px;background:#222;box-shadow:0 4px 16px rgba(0,0,0,.4)}
+.sim-titlebar{height:24px;background:#2e2e2e;border-bottom:1px solid #1a1a1a;display:flex;align-items:center;padding:0 10px;font-size:10px;color:#777;gap:6px;flex-shrink:0}
+.sim-tb-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
+.sim-content{padding:10px}
+.sim-item{cursor:pointer;border-radius:5px;transition:all .15s;outline:2px solid transparent;outline-offset:1px;position:relative}
+.sim-item:hover:not([disabled]){outline-color:rgba(91,141,238,.75);background:rgba(91,141,238,.07)}
+.sim-item.sel{outline-color:var(--acc)!important;background:rgba(91,141,238,.12)!important}
+.sim-item.sok{outline-color:var(--ok)!important;background:rgba(76,203,113,.12)!important;pointer-events:none}
+.sim-item.sbad{outline-color:var(--err)!important;background:rgba(232,82,82,.12)!important;pointer-events:none}
+.sim-item[disabled]{pointer-events:none}
+.sim-foot{font-size:10px;color:#666;text-align:center;padding:6px 10px;border-top:1px solid rgba(255,255,255,.05);background:#1e1e1e}
+.sim-badge{position:absolute;top:-6px;right:-6px;width:14px;height:14px;border-radius:50%;font-size:9px;display:none;align-items:center;justify-content:center;font-weight:700;border:2px solid #222}
+.sim-item.sok .sim-badge{display:flex;background:var(--ok);color:#fff}
+.sim-item.sbad .sim-badge{display:flex;background:var(--err);color:#fff}
+
+/* PS Menu sim */
+.ps-menu-sim{min-width:220px;padding:4px 0}
+.ps-menu-item{display:flex;align-items:center;justify-content:space-between;padding:6px 16px;font-size:12px;color:#ddd;border-left:3px solid transparent}
+.sim-item.sel .ps-menu-item{border-left-color:var(--acc)}
+.sim-item.sok .ps-menu-item{border-left-color:var(--ok);color:var(--ok)}
+.sim-item.sbad .ps-menu-item{border-left-color:var(--err);color:var(--err)}
+.ps-menu-kb{font-size:9px;color:#666;flex-shrink:0}
+.ps-menu-sep{height:1px;background:#444;margin:3px 8px}
+
+/* Layers panel sim */
+.ps-lyr-sim-hd{background:#3c3c3c;padding:4px 8px;font-size:10px;color:#aaa;border-bottom:1px solid #1a1a1a;display:flex;justify-content:space-between;align-items:center}
+.ps-lyr-fields{padding:4px 6px;border-bottom:1px solid #1a1a1a}
+.ps-lf-row{display:flex;align-items:center;justify-content:space-between;padding:4px 8px;border-radius:5px;margin-bottom:3px;font-size:11px;color:#ccc;transition:all .15s}
+.ps-lf-val{background:#1a1a1a;border:1px solid #555;border-radius:3px;padding:1px 8px;font-size:10px;color:#ddd;font-family:monospace}
+.ps-lyr-list{padding:4px 5px}
+.ps-lyr-row{display:flex;align-items:center;gap:5px;height:34px;padding:1px 3px;border-radius:4px;user-select:none}
+.ps-lyr-row.actv{background:rgba(91,141,238,.15)}
+.ps-eye{width:18px;height:18px;border-radius:3px;display:flex;align-items:center;justify-content:center;font-size:11px;flex-shrink:0;transition:outline .15s}
+.ps-ct{width:28px;height:28px;border-radius:3px;border:1px solid #555;flex-shrink:0;overflow:hidden;transition:outline .15s}
+.ps-mk{width:28px;height:28px;border-radius:3px;border:1px solid #666;flex-shrink:0;background:#fff;position:relative;transition:all .15s}
+.ps-mk::after{content:'';position:absolute;inset:0;background:repeating-conic-gradient(#aaa 0 25%,#fff 0 50%) 0 0/8px 8px;opacity:.3}
+.ps-lname{font-size:10px;color:#ccc;flex:1}
+.ps-ltag{font-size:10px;color:#777}
+.ps-lock{font-size:12px;color:#777}
+
+/* Gradient editor sim */
+.ps-ge-wrap{padding:10px 12px;background:#2e2e2e;border-radius:6px}
+.ps-ge-title{font-size:10px;color:#888;margin-bottom:8px;font-weight:500}
+.ps-ge-bar-area{position:relative;padding:8px 0 20px 0;margin-bottom:8px}
+.ps-ge-bar{height:16px;border-radius:3px;border:1px solid #555;position:relative;overflow:visible}
+.ps-ge-bar-inner{height:100%;border-radius:2px;background:linear-gradient(to right,#fff,#000)}
+.ps-ge-stop{position:absolute;bottom:-18px;width:16px;height:18px;border-radius:3px;border:2px solid #777;cursor:pointer;transition:all .15s}
+.ps-ge-stop.white{left:-2px;background:#fff}
+.ps-ge-stop.black{right:-2px;background:#000}
+.ps-ge-opstop{position:absolute;top:-18px;width:16px;height:18px;border-radius:3px;border:2px solid #777;cursor:pointer;background:rgba(255,255,255,.9);transition:all .15s}
+.ps-ge-label{font-size:9px;color:#777;text-align:center;margin-top:2px}
+
+/* Export dialog sim */
+.ps-exdlg{background:#3c3c3c;border-radius:6px;overflow:hidden;border:1px solid #555}
+.ps-exdlg-hd{background:#4a4a4a;padding:7px 14px;font-size:11px;color:#ddd;font-weight:500;border-bottom:1px solid #555}
+.ps-exdlg-row{display:flex;align-items:center;gap:9px;padding:7px 14px;font-size:11px;color:#ccc;border-bottom:1px solid rgba(255,255,255,.04);transition:all .15s}
+.ps-check{width:12px;height:12px;border-radius:2px;border:1px solid #777;background:#2a2a2a;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:9px;transition:all .15s}
+.sim-item.sel .ps-check{background:var(--acc);border-color:var(--acc);color:#fff}
+.sim-item.sok .ps-check{background:var(--ok);border-color:var(--ok);color:#fff}
+.sim-item.sbad .ps-check{background:var(--err);border-color:var(--err);color:#fff}
+
+/* Shape tools sim */
+.ps-fly{background:#3c3c3c;border:1px solid #555;border-radius:5px;overflow:hidden;min-width:190px}
+.ps-fly-item{display:flex;align-items:center;gap:9px;padding:6px 14px;font-size:12px;color:#ddd;transition:background .1s}
+.sim-item.sel .ps-fly-item{background:rgba(91,141,238,.2);color:#78b4ee}
+.sim-item.sok .ps-fly-item{background:rgba(76,203,113,.12);color:var(--ok)}
+.sim-item.sbad .ps-fly-item{background:rgba(232,82,82,.1);color:var(--err)}
+.ps-fly-icon{width:20px;text-align:center;font-size:14px;color:#aaa;flex-shrink:0}
+.ps-fly-kb{font-size:9px;color:#666;margin-left:auto;flex-shrink:0}
+
+/* Format options sim */
+.fmt-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;padding:10px}
+.fmt-card{padding:10px 8px;background:#3c3c3c;border:1px solid #555;border-radius:6px;text-align:center;transition:all .15s}
+.fmt-ext{font-size:18px;font-weight:800;color:#ddd;margin-bottom:3px}
+.fmt-desc{font-size:9px;color:#888;line-height:1.4}
+
+/* Tool action sim */
+.tact-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;padding:10px}
+.tact-card{padding:10px 8px;background:#3c3c3c;border:1px solid #555;border-radius:6px;text-align:center;transition:all .15s}
+.tact-icon{font-size:20px;color:#aaa;margin-bottom:4px;line-height:1}
+.tact-name{font-size:12px;color:#ddd;font-weight:500}
+.tact-en{font-size:9px;color:#888;margin-top:1px}
+
+/* Panel selector sim */
+.panel-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;padding:10px}
+.panel-card{padding:10px 8px;background:#3c3c3c;border:1px solid #555;border-radius:6px;text-align:center}
+.panel-icon{font-size:20px;color:#aaa;margin-bottom:3px}
+.panel-name{font-size:11px;color:#ddd;font-weight:500}
+.panel-en{font-size:9px;color:#888;margin-top:2px}
+
+/* EFFECTS */
+@keyframes glitch-shake{
+  0%{transform:translate(0,0) skewX(0);filter:none}
+  8%{transform:translate(-9px,2px) skewX(-6deg);filter:hue-rotate(90deg) saturate(4) brightness(1.4)}
+  16%{transform:translate(9px,-3px) skewX(4deg);filter:hue-rotate(-90deg) saturate(3)}
+  24%{transform:translate(-6px,1px) skewX(-2deg);filter:brightness(1.6)}
+  32%{transform:translate(7px,-2px) skewX(3deg);filter:hue-rotate(180deg)}
+  40%{transform:translate(-5px,2px);filter:saturate(5)}
+  48%{transform:translate(5px,-1px);filter:none}
+  56%{transform:translate(-3px,1px);filter:hue-rotate(270deg) brightness(1.2)}
+  72%{transform:translate(2px,-1px)}
+  100%{transform:translate(0,0);filter:none}
+}
+.card-glitch{animation:glitch-shake .55s ease-in-out forwards;outline:3px solid rgba(232,82,82,.8)!important;box-shadow:0 0 28px rgba(232,82,82,.35),inset 0 0 18px rgba(232,82,82,.06)!important}
+@keyframes success-glow{0%{border-color:rgba(76,203,113,.6);box-shadow:0 0 0 0 rgba(76,203,113,.3)}50%{border-color:rgba(76,203,113,.9);box-shadow:0 0 26px 4px rgba(76,203,113,.18)}100%{border-color:rgba(76,203,113,.5);box-shadow:0 0 0 0 rgba(76,203,113,0)}}
+.card-success{animation:success-glow .9s ease-out forwards;border-color:rgba(76,203,113,.5)!important}
+@keyframes red-flash{0%{opacity:.35}40%{opacity:.5}100%{opacity:0}}
+#glitch-overlay{display:none;position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:800;background:rgba(200,30,30,.18)}
+#glitch-overlay.on{display:block;animation:red-flash .65s ease-out forwards}
+#fw-canvas{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:900;display:none}
+@keyframes float-score{0%{opacity:1;transform:translateY(0) scale(1)}100%{opacity:0;transform:translateY(-70px) scale(1.4)}}
+.score-float{position:fixed;z-index:850;pointer-events:none;font-size:26px;font-weight:800;color:var(--ok);text-shadow:0 0 12px rgba(76,203,113,.6);animation:float-score 1.3s ease-out forwards}
+@media(max-width:640px){.navbar{padding:0 10px}.nav-title{display:none}.nav-btn{padding:5px 9px;font-size:11px}.container{padding:18px 10px}.mrow{flex-direction:column;align-items:stretch}.mitem{text-align:left}}
+</style>
+</head>
+<body>
+
+<nav class="navbar">
+  <div class="nav-logo">Ps</div>
+  <div class="nav-title">ACP Photoshop CC 備考系統</div>
+  <div class="nav-links">
+    <button class="nav-btn active" onclick="goPage('intro',this)">🖥 軟體介紹</button>
+    <button class="nav-btn" onclick="goPage('questions',this)">📚 考古題詳解</button>
+    <button class="nav-btn" onclick="goPage('exam',this)">🎯 模擬考試</button>
+  </div>
+</nav>
+
+<div id="page-intro" class="page active">
+<div class="container">
+<div class="block">
+  <div class="sec-hd">介面總覽 — 點擊數字認識各區塊</div>
+  <div style="position:relative">
+    <div class="ps-mock">
+      <div class="ps-bar"><div class="ps-mi">File</div><div class="ps-mi hl">Edit</div><div class="ps-mi">Image</div><div class="ps-mi">Layer</div><div class="ps-mi">Type</div><div class="ps-mi">Select</div><div class="ps-mi">Filter</div><div class="ps-mi">View</div><div class="ps-mi">Window</div></div>
+      <div class="ps-optbar"><span style="font-size:12px;color:#888">✦</span><div class="ps-oi">Mode: Normal</div><div class="ps-oi">Opacity: 100%</div><div class="ps-oi">Flow: 100%</div><div style="flex:1"></div><span style="font-size:10px;color:#666">Workspace ▼</span></div>
+      <div class="ps-main">
+        <div class="ps-toolbox">
+          <div class="ps-t on">↖</div><div class="ps-t">⬜</div><div class="ps-t">⌒</div><div class="ps-t">✦</div>
+          <div class="ps-sep"></div>
+          <div class="ps-t">⊡</div><div class="ps-t">✏</div>
+          <div class="ps-sep"></div>
+          <div class="ps-t">⊕</div><div class="ps-t">🖌</div><div class="ps-t">◈</div><div class="ps-t">◻</div>
+          <div class="ps-sep"></div>
+          <div class="ps-t">▥</div><div class="ps-t">◉</div>
+          <div class="ps-sep"></div>
+          <div class="ps-t" style="font-weight:700;font-size:13px">T</div>
+          <div class="ps-t">✒</div><div class="ps-t">▬</div>
+          <div class="ps-sep"></div>
+          <div class="ps-t">🔍</div><div class="ps-t">✋</div>
+        </div>
+        <div class="ps-canvas-area">
+          <div style="position:absolute;top:7px;left:50%;transform:translateX(-50%);font-size:10px;color:#777;white-space:nowrap">未命名-1.psd @ 100% (RGB/8#)</div>
+          <div class="ps-canvas"><div class="ps-canvas-bg"><div class="ps-shape"></div><div class="ps-ctext">ACP 考試</div></div></div>
+        </div>
+        <div class="ps-panels">
+          <div class="ps-ph"><span>顏色 / 色票</span><span>▾</span></div>
+          <div class="ps-pb" style="display:flex;gap:6px;align-items:center">
+            <div><div style="width:20px;height:20px;background:#000;border:1px solid #666"></div><div style="width:20px;height:20px;background:#fff;border:1px solid #666;margin-top:4px;margin-left:-8px"></div></div>
+            <div style="flex:1;display:flex;flex-direction:column;gap:3px;margin-left:5px">
+              <div style="display:flex;align-items:center;gap:3px"><span style="font-size:9px;color:#888;width:8px">R</span><div style="flex:1;height:5px;background:linear-gradient(to right,#000,#f00);border-radius:2px"></div></div>
+              <div style="display:flex;align-items:center;gap:3px"><span style="font-size:9px;color:#888;width:8px">G</span><div style="flex:1;height:5px;background:linear-gradient(to right,#000,#0f0);border-radius:2px"></div></div>
+              <div style="display:flex;align-items:center;gap:3px"><span style="font-size:9px;color:#888;width:8px">B</span><div style="flex:1;height:5px;background:linear-gradient(to right,#000,#00f);border-radius:2px"></div></div>
+            </div>
+          </div>
+          <div class="ps-lyr-panel">
+            <div class="ps-ph"><span>圖層 (Layers)</span><span>▾</span></div>
+            <div class="ps-lyr-opts"><span>正常 ▼</span><span>不透明: 100%</span></div>
+            <div class="lyr-list">
+              <div class="lyr sel"><span>👁</span><div class="lyr-th" style="background:linear-gradient(135deg,#f90,#e83)"></div><span>文字圖層</span><span style="margin-left:auto;font-size:9px;opacity:.6">T</span></div>
+              <div class="lyr"><span>👁</span><div class="lyr-th" style="background:rgba(255,140,0,.4)"></div><span>圖層 2</span></div>
+              <div class="lyr"><span>👁</span><div class="lyr-th" style="background:linear-gradient(135deg,#e8f4f8,#a8c8e0)"></div><span>背景</span><span style="margin-left:auto;font-size:9px;opacity:.4">🔒</span></div>
+            </div>
+            <div class="lyr-btns"><span class="lbtn">⊕</span><span class="lbtn">⊞</span><span class="lbtn">fx</span><span class="lbtn">◑</span><span class="lbtn">🗑</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="ps-status"><span>文件大小: 2.4M</span><span>縮放: 100%</span><span style="flex:1"></span><span>1920×1080 px · 72 ppi · RGB</span></div>
+    </div>
+    <div class="ann" id="a1" style="top:7px;left:62px" onclick="showAnn(1)">1</div>
+    <div class="ann" id="a2" style="top:36px;left:190px" onclick="showAnn(2)">2</div>
+    <div class="ann" id="a3" style="top:88px;left:14px" onclick="showAnn(3)">3</div>
+    <div class="ann" id="a4" style="top:200px;left:230px" onclick="showAnn(4)">4</div>
+    <div class="ann" id="a5" style="top:96px;right:7px" onclick="showAnn(5)">5</div>
+    <div class="ann" id="a6" style="top:280px;right:7px" onclick="showAnn(6)">6</div>
+    <div class="ann" id="a7" style="bottom:0;left:106px" onclick="showAnn(7)">7</div>
+  </div>
+  <div class="info-box">
+    <div class="info-box-title" id="ann-title">👆 點擊上方紅色數字，了解各區塊功能</div>
+    <div class="info-box-body" id="ann-body">Photoshop 介面分為 7 大區塊。建議先認識圖層面板（⑥）和工具箱（③）。</div>
+    <div class="badge-row" id="ann-badges"></div>
+  </div>
+</div>
+<div class="block">
+  <div class="sec-hd">工具手冊與快速鍵</div>
+  <div class="gtabs">
+    <div class="gtab active" onclick="switchGuide('tools',this)">🛠 常用工具</div>
+    <div class="gtab" onclick="switchGuide('shortcuts',this)">⌨️ 快速鍵</div>
+    <div class="gtab" onclick="switchGuide('concepts',this)">🧠 核心概念</div>
+  </div>
+  <div class="gsec active" id="g-tools">
+    <div class="tool-grid">
+      <div class="tc"><div class="tc-head"><kbd>V</kbd> 移動工具</div><div class="tc-body">移動圖層位置。Alt+拖曳複製。</div></div>
+      <div class="tc"><div class="tc-head"><kbd>M</kbd> 選取框工具</div><div class="tc-body">矩形/橢圓選取。Shift加選，Alt減選。</div></div>
+      <div class="tc"><div class="tc-head"><kbd>L</kbd> 套索工具</div><div class="tc-body">自由/多邊形/磁性套索，選取不規則物體。</div></div>
+      <div class="tc"><div class="tc-head"><kbd>W</kbd> 魔術棒</div><div class="tc-body">依顏色容差選取相似色彩區域。</div></div>
+      <div class="tc"><div class="tc-head"><kbd>C</kbd> 裁切工具</div><div class="tc-body">裁切畫布尺寸。可設定固定比例。</div></div>
+      <div class="tc"><div class="tc-head"><kbd>J</kbd> 修復筆刷</div><div class="tc-body">修補瑕疵並自動融合周圍紋理。</div></div>
+      <div class="tc"><div class="tc-head"><kbd>B</kbd> 筆刷工具</div><div class="tc-body">繪圖主工具。<kbd>[</kbd><kbd>]</kbd> 調整大小。</div></div>
+      <div class="tc"><div class="tc-head"><kbd>S</kbd> 仿製印章</div><div class="tc-body">Alt+點擊取樣，拖曳複製像素。</div></div>
+      <div class="tc"><div class="tc-head"><kbd>E</kbd> 橡皮擦</div><div class="tc-body">直接刪除像素。非破壞性建議用遮色片。</div></div>
+      <div class="tc"><div class="tc-head"><kbd>G</kbd> 漸層工具</div><div class="tc-body">線性/放射/角度/反射/菱形等 5 種。</div></div>
+      <div class="tc"><div class="tc-head"><kbd>T</kbd> 文字工具</div><div class="tc-body">建立可編輯文字圖層。點陣化後不可改字。</div></div>
+      <div class="tc"><div class="tc-head"><kbd>U</kbd> 形狀工具</div><div class="tc-body">矩形/橢圓/多邊形/自定形狀向量圖形。</div></div>
+    </div>
+  </div>
+  <div class="gsec" id="g-shortcuts">
+    <div class="sc-wrap">
+      <table class="sc">
+        <thead><tr><th style="width:28%">功能</th><th style="width:32%">快速鍵</th><th>說明</th></tr></thead>
+        <tbody>
+          <tr><td>復原</td><td><kbd>Ctrl</kbd>+<kbd>Z</kbd></td><td class="sc-note">上一步</td></tr>
+          <tr><td>多步復原</td><td><kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>Z</kbd></td><td class="sc-note">連續回溯多步</td></tr>
+          <tr><td>全選</td><td><kbd>Ctrl</kbd>+<kbd>A</kbd></td><td class="sc-note">選取整個畫布</td></tr>
+          <tr><td>取消選取</td><td><kbd>Ctrl</kbd>+<kbd>D</kbd></td><td class="sc-note">超高頻！考試必備</td></tr>
+          <tr><td>複製圖層</td><td><kbd>Ctrl</kbd>+<kbd>J</kbd></td><td class="sc-note">原地複製圖層</td></tr>
+          <tr><td>合併圖層</td><td><kbd>Ctrl</kbd>+<kbd>E</kbd></td><td class="sc-note">與下方圖層合併</td></tr>
+          <tr><td>自由變形</td><td><kbd>Ctrl</kbd>+<kbd>T</kbd></td><td class="sc-note">Enter 確認，Esc 取消</td></tr>
+          <tr><td>填滿前景色</td><td><kbd>Alt</kbd>+<kbd>Delete</kbd></td><td class="sc-note">以前景色填滿</td></tr>
+          <tr><td>色階</td><td><kbd>Ctrl</kbd>+<kbd>L</kbd></td><td class="sc-note">調整亮暗對比</td></tr>
+          <tr><td>曲線</td><td><kbd>Ctrl</kbd>+<kbd>M</kbd></td><td class="sc-note">精細色調控制</td></tr>
+          <tr><td>色相/飽和度</td><td><kbd>Ctrl</kbd>+<kbd>U</kbd></td><td class="sc-note">調整色彩</td></tr>
+          <tr><td>符合螢幕</td><td><kbd>Ctrl</kbd>+<kbd>0</kbd></td><td class="sc-note">畫布縮放至視窗</td></tr>
+          <tr><td>切換前/背景色</td><td><kbd>X</kbd></td><td class="sc-note">互換兩色</td></tr>
+          <tr><td>重設為黑白</td><td><kbd>D</kbd></td><td class="sc-note">前景黑，背景白</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="gsec" id="g-concepts">
+    <div class="concept-grid">
+      <div class="cc"><div class="cc-head"><div class="cc-icon" style="background:rgba(91,141,238,.15)">📦</div><div class="cc-name">圖層（Layers）</div></div><div class="cc-body">透明玻璃紙概念，上方圖層優先顯示。背景圖層無透明，雙擊可解鎖。</div></div>
+      <div class="cc"><div class="cc-head"><div class="cc-icon" style="background:rgba(232,82,82,.15)">🎭</div><div class="cc-name">遮色片（Mask）</div></div><div class="cc-body">黑色隱藏、白色顯示。非破壞性，不刪除像素，隨時可修改。</div></div>
+      <div class="cc"><div class="cc-head"><div class="cc-icon" style="background:rgba(76,203,113,.15)">✨</div><div class="cc-name">混合模式</div></div><div class="cc-body">色彩增值變深；網屏變亮；覆蓋增強對比。決定圖層如何與下方混合。</div></div>
+      <div class="cc"><div class="cc-head"><div class="cc-icon" style="background:rgba(224,160,48,.15)">🔧</div><div class="cc-name">調整圖層</div></div><div class="cc-body">非破壞性色彩調整，可反覆修改。從圖層面板下方半圓按鈕新增。</div></div>
+      <div class="cc"><div class="cc-head"><div class="cc-icon" style="background:rgba(160,100,220,.15)">🔗</div><div class="cc-name">智慧型物件</div></div><div class="cc-body">縮放不失真，保留原始資料。嵌入=獨立；連結=可自動更新。</div></div>
+      <div class="cc"><div class="cc-head"><div class="cc-icon" style="background:rgba(91,141,238,.15)">💾</div><div class="cc-name">檔案格式</div></div><div class="cc-body">PSD=圖層；JPEG=壓縮無透明；PNG=透明背景；TIFF=跨平台印刷。</div></div>
+    </div>
+  </div>
+</div>
+</div>
+</div>
+
+<div id="page-questions" class="page">
+<div class="container">
+  <div class="sec-hd">考古題詳解</div>
+  <div class="qtabs">
+    <button class="qtab-btn active" onclick="switchQTab('a',this)">📄 第一套：學科考古（25題）</button>
+    <button class="qtab-btn" onclick="switchQTab('b',this)">📘 第二套：操作秘笈（35題）</button>
+  </div>
+
+  <div class="qtab-pane active" id="qtab-a">
+    <div class="q-stats">
+      <div class="stat-pill sp-all">📋 共 25 題</div>
+      <div class="stat-pill sp-op">🖥 操作題 16 題</div>
+      <div class="stat-pill sp-cn">💡 概念題 9 題</div>
+    </div>
+    <div class="accordion" id="q-accordion"></div>
+  </div>
+
+  <div class="qtab-pane" id="qtab-b">
+    <div class="q-stats">
+      <div class="stat-pill sp-all">📋 共 35 題</div>
+      <div class="stat-pill sp-op">🔧 全實機操作</div>
+      <div class="stat-pill" style="background:rgba(91,141,238,.1);color:var(--acc);border-color:rgba(91,141,238,.3)">📁 4 題無需素材</div>
+    </div>
+    <div class="york-progress">
+      <span class="york-prog-lbl">✓ 我會了</span>
+      <div class="york-prog-bar"><div class="york-prog-fill" id="york-fill" style="width:0%"></div></div>
+      <span class="york-prog-num" id="york-prog-txt">0 / 35</span>
+    </div>
+    <div class="york-filters" id="york-filters"></div>
+    <div class="accordion" id="york-accordion"></div>
+  </div>
+</div>
+</div>
+
+<div id="page-exam" class="page">
+<div class="container">
+  <div id="exam-start">
+    <div class="exam-start">
+      <div class="exam-logo">Ps</div>
+      <h2>ACP Photoshop 模擬考試</h2>
+      <p style="margin-bottom:18px">選擇考試範圍，即時判斷結果。<br>操作題有 🖱 PS 介面點擊模擬，答對 🎆 煙火，答錯 💥 崩壞！</p>
+      <div class="scope-grid">
+        <div class="scope-card" id="sc-a" onclick="selectScope('a')">
+          <div class="scope-icon">📄</div>
+          <div class="scope-title">第一套</div>
+          <div class="scope-sub">學科考古題</div>
+          <div class="scope-count">25</div>
+        </div>
+        <div class="scope-card" id="sc-b" onclick="selectScope('b')">
+          <div class="scope-icon">📘</div>
+          <div class="scope-title">第二套</div>
+          <div class="scope-sub">操作秘笈</div>
+          <div class="scope-count">35</div>
+        </div>
+        <div class="scope-card active" id="sc-all" onclick="selectScope('all')">
+          <div class="scope-icon">📋</div>
+          <div class="scope-title">全部混合</div>
+          <div class="scope-sub">完整備考</div>
+          <div class="scope-count">60</div>
+        </div>
+      </div>
+      <button class="btn-start" onclick="startExam()">開始考試 →</button>
+    </div>
+  </div>
+  <div id="exam-quiz">
+    <div class="qhdr">
+      <div class="qprog-txt" id="qprog-txt">第 1 / 25 題</div>
+      <div class="qprog-bar"><div class="qprog-fill" id="qprog-fill" style="width:0%"></div></div>
+      <div class="qscore" id="qscore-badge">得分 0</div>
+    </div>
+    <div class="qcard" id="qcard">
+      <div class="qcard-num" id="qcard-num"></div>
+      <div class="qcard-text" id="qcard-text"></div>
+      <div class="qcard-hint" id="qcard-hint"></div>
+      <div id="qcard-body"></div>
+      <div class="confirm-area">
+        <button class="btn-confirm" id="btn-confirm" onclick="confirmAnswer()" disabled>確認作答</button>
+      </div>
+      <div class="fb-area" id="fb-area">
+        <div class="fb-banner" id="fb-banner">
+          <div class="fb-emoji" id="fb-emoji"></div>
+          <div>
+            <div class="fb-title" id="fb-title"></div>
+            <div class="fb-correct" id="fb-correct" style="display:none"></div>
+            <div class="fb-body" id="fb-body"></div>
+          </div>
+        </div>
+        <button class="btn-next" id="btn-next" onclick="nextQuestion()">繼續下一題 →</button>
+      </div>
+    </div>
+  </div>
+  <div id="exam-result">
+    <div class="res-circle"><div class="res-num" id="res-num">0</div><div class="res-den" id="res-den">/25</div></div>
+    <div class="stars" id="res-stars">⭐</div>
+    <div class="res-h2" id="res-h2">考試完成！</div>
+    <div class="res-msg" id="res-msg"></div>
+    <div id="wrongs-section" style="display:none">
+      <div class="wrongs-hd">❌ 答錯的題目（點擊查看詳解）：</div>
+      <div class="wrong-list" id="wrong-list"></div>
+    </div>
+    <div class="res-btns">
+      <button class="btn-start" onclick="startExam()">🔄 重新考試</button>
+      <button class="btn2" onclick="goPage('questions',null)">📚 查看詳解</button>
+    </div>
+  </div>
+</div>
+</div>
+
+<canvas id="fw-canvas"></canvas>
+<div id="glitch-overlay"></div>
+
+<script>
+// ──────────────── ANNOTATIONS ────────────────
+const annData={
+  1:{title:'① 選單列（Menu Bar）',body:'所有功能的入口。File存開檔、Edit編輯、Image影像調整、Layer圖層操作、Window開關面板。',badges:['File → 存開檔','Image → Adjustments','Window → 開關面板']},
+  2:{title:'② 選項列（Options Bar）',body:'根據目前工具動態變化。選筆刷顯示硬度/不透明度；選文字顯示字型/大小。',badges:['筆刷硬度','不透明度','混合模式']},
+  3:{title:'③ 工具箱（Toolbox）',body:'所有操作工具。右下角三角形=有隱藏工具，長按展開。V移動、M選取、B筆刷、T文字、U形狀。',badges:['V 移動','M 選取','B 筆刷','U 形狀']},
+  4:{title:'④ 畫布 / 工作區（Canvas）',body:'白色是文件範圍，灰色是暫存區不會輸出。Ctrl+0符合螢幕，Ctrl+1實際100%。',badges:['Ctrl+0 符合螢幕','Ctrl+1 實際大小']},
+  5:{title:'⑤ 顏色 / 色票面板',body:'設定前景色和背景色。X鍵互換；D鍵重設黑白。支援RGB/CMYK/HSB輸入精確數值。',badges:['X 切換前/背景色','D 重設為黑白']},
+  6:{title:'⑥ 圖層面板（Layers）— 最重要！',body:'核心！調整不透明度、混合模式、新增遮色片和調整圖層。背景圖層有鎖定，雙擊解鎖。',badges:['Ctrl+J 複製','Ctrl+E 合併','遮色片']},
+  7:{title:'⑦ 狀態列（Status Bar）',body:'顯示檔案大小、縮放比例。可直接點擊縮放倍率輸入數值。右側確認輸出規格用。',badges:['檔案大小','縮放比例','文件尺寸 px']}
+};
+function showAnn(n){
+  document.querySelectorAll('.ann').forEach(b=>b.classList.remove('on'));
+  document.getElementById('a'+n).classList.add('on');
+  const d=annData[n];
+  document.getElementById('ann-title').textContent=d.title;
+  document.getElementById('ann-body').textContent=d.body;
+  document.getElementById('ann-badges').innerHTML=d.badges.map(b=>`<span class="badge">${b}</span>`).join('');
+}
+function switchGuide(id,el){
+  document.querySelectorAll('.gtab').forEach(t=>t.classList.remove('active'));
+  document.querySelectorAll('.gsec').forEach(s=>s.classList.remove('active'));
+  el.classList.add('active');
+  document.getElementById('g-'+id).classList.add('active');
+}
+function goPage(name,el){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById('page-'+name).classList.add('active');
+  if(el) el.classList.add('active');
+  else document.querySelectorAll('.nav-btn').forEach((b,i)=>{if(['intro','questions','exam'][i]===name)b.classList.add('active');});
+  window.scrollTo(0,0);
+}
+
+// ──────────────── QDB ────────────────
+const QDB=[
+  {id:1,type:'matching',cat:'cn',q:'將以下詞彙與正確定義進行配對',
+   items:['點陣化','點陣圖','向量','重新取樣'],
+   opts:['將使用幾何公式儲存的影像轉換成像素','方格上的彩色小點所建立的影像','透過定義點和曲線所建立的影像','調整影像中的像素數目'],
+   ans:[0,1,2,3],
+   expl:'點陣化=把向量轉成像素；點陣圖=像素組成的影像；向量=數學公式定義的圖形；重新取樣=增減影像像素數目。'},
+  {id:2,type:'single',cat:'op',simType:'panels',
+   q:'您正在建立一個標誌且需要新增一艘船隻，在哪裡可以找到向量船隻？',
+   opts:['色票面板','筆刷面板','圖案面板','形狀面板'],
+   ans:3,
+   expl:'向量形狀儲存在「形狀面板」（Window → Shapes）。選形狀工具(U)後，在選項列或形狀面板中可瀏覽所有預設向量形狀。',
+   steps:['工具箱選「形狀工具 (U)」','選項列點「形狀」下拉選單','或開啟 Window → Shapes 面板','找到船隻形狀後拖曳繪製']},
+  {id:3,type:'single',cat:'cn',q:'什麼是專案範圍？',
+   opts:['建置階段','成本估算和專案進度表','文件尺寸','客戶溝通計畫'],
+   ans:1,
+   expl:'專案範圍（Project Scope）是專案工作的邊界和交付物，包含成本估算、時間表、資源規劃等。這是設計專案管理的基礎概念。'},
+  {id:4,type:'single',cat:'op',simType:'layers_opc',
+   q:'文件中有使用陰影的文字圖層，您需要使文字變透明而不變更陰影透明度。該怎麼做？',
+   opts:['將不透明度的值變更為 0%','將填滿的值變更為 0%','按一下圖層縮圖','按一下圖層旁邊的眼睛顯示'],
+   ans:1,
+   expl:'「不透明度」控制整個圖層（含圖層效果如陰影）；「填滿」只控制圖層內容本身，不影響效果。讓文字透明但保留陰影 → 調整「填滿」為 0%。',
+   steps:['圖層面板選取文字圖層','找到「不透明度」下方的「填滿」欄位','將填滿值調整為 0%','文字消失但陰影效果保留']},
+  {id:5,type:'multiple',cat:'cn',q:'哪兩個敘述是描述字距微調和字距調整？（請選擇 2 個答案）',count:2,
+   opts:['字距微調是兩行之間的空間','字距微調是一對字元之間的空間','字距調整是一串字元之間的間距','字距調整是第一行和第二行文字之間的空間'],
+   ans:[1,2],
+   expl:'字距微調（Kerning）= 一對字元之間的空間；字距調整（Tracking）= 整段文字所有字元的整體間距。行距（Leading）才是兩行之間的距離。'},
+  {id:6,type:'matching',cat:'op',
+   q:'將各選取工具與其敘述進行配對',
+   items:['套索工具','矩形選取畫面','魔術棒工具','快速選取工具'],
+   icons:['⌒','□','✦','⊕'],
+   opts:['以自由圈選方式選取不規則區域','以矩形或正方形方式圈選區域','根據容許度設定選取相似色彩區域','用筆刷尺寸等參數偵測並選取影像區域'],
+   ans:[0,1,2,3],
+   expl:'套索=自由手繪選取；矩形選取畫面=規則矩形；魔術棒=顏色相近區域（容差控制）；快速選取=筆刷式智慧選取，能偵測邊緣。',
+   steps:['M → 矩形選取框','L → 套索工具（長按選磁性套索）','W → 魔術棒（長按選快速選取）','選項列可調整容差/筆刷大小']},
+  {id:7,type:'single',cat:'op',simType:'filemenu',
+   q:'您想要將硬碟上的參考影像置入，必須能夠在原始影像無法使用時仍可處理文件。請問您會使用哪個功能表選項？',
+   opts:['置入連結的智慧型物件 (K)','置入嵌入的物件 (L)','開啟舊檔 (O)','快速轉存 PNG'],
+   ans:1,
+   expl:'「置入嵌入的物件」將影像資料直接嵌入PSD，原始檔案消失也不影響。「置入連結的智慧型物件」保持連結，原始檔案不存在時會顯示遺失。',
+   steps:['File → 置入嵌入的物件(L)','選取要置入的圖片檔案','按確認，影像嵌入文件','Enter 確認置入位置']},
+  {id:8,type:'matching',cat:'op',
+   q:'請將各項漸層類型與其描述進行配對',
+   items:['線性漸層','放射性漸層','角度漸層','反射性漸層','菱形漸層'],
+   grads:['linear-gradient(to right,#fff,#000)','radial-gradient(circle,#fff 20%,#000 100%)','conic-gradient(from -90deg,#000,#fff 50%,#000)','linear-gradient(to right,#000,#fff 50%,#000)','repeating-conic-gradient(#fff 0deg 45deg,#000 45deg 90deg)'],
+   opts:['從起點到終點的直線色彩過渡','從起點向外輻射的同心圓過渡','繞起點逆時針掃過的錐形漸層','以起點為軸兩側對稱的線性漸層','以起點為中心向外形成菱形的漸層'],
+   ans:[0,1,2,3,4],
+   expl:'工具箱選漸層工具(G)，選項列有五種類型圖示。線性最常用；放射性做圓形光暈；菱形做特殊形狀光感。',
+   steps:['工具箱選「漸層工具 (G)」','選項列選擇漸層類型（5個圖示）','點選項列中的漸層預覽條可編輯顏色','在畫布上拖曳套用']},
+  {id:9,type:'matching',cat:'cn',q:'請將字距微調、行距、基準線三個印刷術語與其定義配對',
+   items:['行距','字距微調','基準線'],
+   opts:['兩行文字之間的垂直間距','特定兩個字元之間的水平間距調整','文字所坐落的水平基準位置（可上下位移形成上下標）'],
+   ans:[0,1,2],
+   expl:'行距（Leading）控制行與行之間的距離；字距微調（Kerning）調整特定字元對的間距；基準線位移（Baseline Shift）讓字元上移或下移，可製作上標/下標效果。'},
+  {id:10,type:'truefalse',cat:'op',q:'請判斷以下關於圖樣操作的敘述是否正確',
+   statements:[
+     {text:'您可以將圖樣儲存至「色票」面板',ans:false},
+     {text:'您可以使用「編輯 > 定義圖樣」來建立圖樣',ans:true},
+     {text:'您可以使用「矩形選取畫面」來選取要當作圖樣使用的區域',ans:true},
+     {text:'您可以使用「圖層 > 圖層內容選項」來修改圖樣的縮放',ans:true}
+   ],
+   expl:'圖樣存在「圖樣面板」不是色票面板，所以第一題是錯的。建立圖樣：矩形選取 → Edit → 定義圖樣。縮放透過「圖層 > 圖層內容選項」修改。',
+   steps:['矩形選取工具選取要定義的區域','Edit（編輯）→ 定義圖樣','輸入名稱，點 OK','套用：新增填色圖層 → 圖樣選項']},
+  {id:11,type:'single',cat:'op',simType:'exportmenu',
+   q:'您需要將文件的每個圖層轉存到具有前置 SKATE 的單一 PNG-24 檔案。應該使用哪個功能？',
+   opts:['快速轉存為 PNG','圖層轉存檔案...','轉存為 (Alt+Shift+W)','另存新檔 (Ctrl+S)'],
+   ans:1,
+   expl:'「圖層轉存檔案」（File → 轉存 → 圖層轉存檔案）可批次將每個圖層分別轉存，並可設定檔名前置詞（如 SKATE）和格式（PNG-24）。',
+   steps:['File → 轉存 → 圖層轉存檔案','選擇輸出資料夾','設定檔案前置詞為「SKATE」','格式選「PNG-24」，點執行']},
+  {id:12,type:'single',cat:'op',simType:'layermask',
+   q:'您正在使用橡皮擦工具，若您的修改將是非破壞性，請在「圖層」面板中點選哪個縮圖？',
+   opts:['點選圖層內容縮圖（左側大縮圖）','點選圖層遮色片縮圖（右側小縮圖）','點選圖層左側的眼睛圖示','點選圖層右側的鎖定圖示'],
+   ans:1,
+   expl:'點選遮色片縮圖後使用橡皮擦，效果是「遮蔽」像素而非永久刪除，可隨時用白色筆刷恢復。點選內容縮圖直接使用橡皮擦則永久刪除。',
+   steps:['圖層面板 → 點選目標圖層','點圖層遮色片縮圖（若無，先點「加入圖層遮色片」按鈕）','選橡皮擦工具 (E)','在畫面上擦除（像素被隱藏而非刪除）']},
+  {id:13,type:'multiple',cat:'cn',q:'您必須在專案目標文件中包含哪三項資訊？（請選擇 3 個答案）',count:3,
+   opts:['專案目的','專案截止日期','目標受眾','預算金額','設計師姓名'],
+   ans:[0,1,2],
+   expl:'專案目標文件三大核心：專案目的（要達成什麼）、截止日期（何時完成）、目標受眾（為誰設計）。這三項是ACP設計概念的基本考點。'},
+  {id:14,type:'single',cat:'cn',q:'什麼是著作權？',
+   opts:['設計和提供展示的專有權利','包含作者和藝術家姓名的影像拷貝','文件的合法拷貝','一個法律術語，賦予原始作品創作者專有權利'],
+   ans:3,
+   expl:'著作權（Copyright）是法律賦予作品創作者的專有權利，保護其作品不被未授權使用。選項D才是著作權的正確定義。'},
+  {id:15,type:'multiple',cat:'cn',q:'在下方選取兩種「禁止修改影像」的授權類型。（請選擇 2 個答案）',count:2,
+   opts:['CC BY（姓名標示）','CC BY-ND（姓名標示-禁止改作）','CC BY-SA（姓名標示-相同方式分享）','CC BY-NC-ND（姓名標示-非商業性-禁止改作）'],
+   ans:[1,3],
+   expl:'ND = No Derivatives（禁止改作）。含有ND的授權禁止對作品進行修改、改編或衍生創作。CC BY-ND和CC BY-NC-ND都包含ND，因此都禁止修改。'},
+  {id:16,type:'single',cat:'op',simType:'gradedit',
+   q:'請問您應該按兩下哪個選項，才能將漸層的白色端變更為黃色？',
+   opts:['在漸層預覽條中間點擊','按兩下漸層預覽條下方的白色色標','按一下漸層預覽條左端','按兩下漸層預覽條上方不透明度色標'],
+   ans:1,
+   expl:'漸層條下方的色標控制顏色，上方控制不透明度。要修改端點顏色，需對顏色色標「按兩下」才會開啟顏色選取器。按一下只是選取。',
+   steps:['工具箱選漸層工具 (G)','選項列點漸層預覽條開啟編輯器','找到漸層條下方的白色色標（端點小方塊）','按兩下開啟顏色選取器','選黃色後按 OK']},
+  {id:17,type:'single',cat:'op',simType:'exportdlg',
+   q:'此影像針對印刷品而製作，您需要轉存以便在網頁使用，請選擇必須變更的設定。',
+   opts:['將解析度從 300 改為 72 DPI','轉換為 sRGB','將色彩模式從 CMYK 改為 RGB','將檔案格式改為 PNG'],
+   ans:1,
+   expl:'印刷品通常用CMYK，但網頁瀏覽器用sRGB色彩空間。轉存網頁用途時最重要的是「轉換為sRGB」，確保顏色在螢幕上正確呈現。',
+   steps:['File → 轉存 → 轉存為','在轉存設定中找到色彩設定','勾選「轉換為 sRGB」','選擇網頁格式（JPEG 或 PNG）→ 轉存']},
+  {id:18,type:'matching',cat:'op',q:'將各個工具與其描述進行配對',
+   items:['鉛筆工具','顏色取代工具','筆刷工具'],
+   icons:['✏','◈','🖌'],
+   opts:['繪製邊緣硬實、無柔化的筆畫','以選取的新顏色取代目標色彩','使用選項列中的筆刷樣式在文件中繪製柔和筆畫'],
+   ans:[0,1,2],
+   expl:'鉛筆=硬邊，邊緣明顯；筆刷=軟邊，有羽化；顏色取代工具可在維持紋理的同時替換顏色（常用於改變物體顏色而保留質感）。'},
+  {id:19,type:'single',cat:'op',simType:'filemenu',
+   q:'您正在建立名片，需要新增標誌以便在原始檔案變更時自動更新名片中的標誌。請問用哪個功能表選項？',
+   opts:['置入嵌入的物件 (L)','置入連結的智慧型物件 (K)','開啟為智慧型物件','複製貼上 (Ctrl+V)'],
+   ans:1,
+   expl:'「置入連結的智慧型物件」保持與原始PSD的動態連結。原始標誌更新後，所有連結到該檔案的文件都會自動更新。嵌入則是獨立副本，不會更新。',
+   steps:['File → 置入連結的智慧型物件(K)','選取 Fresh Tracks.psd','Enter 確認','日後原始 PSD 更新時，名片中的標誌自動更新']},
+  {id:20,type:'single',cat:'cn',q:'迭代（iteration）設計有什麼好處？',
+   opts:['可以減少總設計時間','可以大幅降低專案成本','可以讓設計人員在整個過程中回應意見反應','可以完全避免設計錯誤發生'],
+   ans:2,
+   expl:'迭代設計的最大好處是設計師可以持續回應客戶和用戶的意見反應，在每次迭代中改善設計，而不是等到最後才發現問題。'},
+  {id:21,type:'single',cat:'op',simType:'shapetools',
+   q:'除了使用字體之外，在哪裡可以找到向量音符？',
+   opts:['筆刷工具的筆刷選單','形狀工具的預設形狀','自定形狀工具','圖案面板'],
+   ans:2,
+   expl:'「自定形狀工具」（U鍵長按）內建許多向量圖形，包含音符、動物、箭頭等。在選項列「形狀」下拉可選擇，也可從Window → Shapes找到。',
+   steps:['工具箱長按「形狀工具(U)」→ 選「自定形狀工具」','選項列點「形狀」下拉選單','從分類找到音符（Music分類）','按住 Shift 拖曳等比例繪製']},
+  {id:22,type:'single',cat:'op',simType:'fmtopts',
+   q:'快速轉存命令預設會產生哪種檔案格式？',
+   opts:['JPEG','PNG','GIF','TIFF'],
+   ans:1,
+   expl:'Photoshop「快速轉存為PNG」預設輸出PNG格式，因為PNG支援透明背景且無損壓縮，適合大多數數位用途。',
+   steps:['File → 轉存 → 快速轉存為 PNG','直接輸出 PNG，不出現設定對話框','需要其他格式請使用「轉存為」選項']},
+  {id:23,type:'multiple',cat:'op',q:'哪兩個描述了調整不透明度和調整填滿不透明度之間的區別？（請選擇 2 個答案）',count:2,
+   opts:['填滿不透明度不會影響圖層效果（如陰影）的不透明度','不透明度決定圖層隱藏或顯示其下方圖層的程度','填滿不透明度和不透明度效果完全相同','不透明度無法設定為 0%'],
+   ans:[0,1],
+   expl:'填滿(Fill)只控制圖層像素，不影響陰影/光暈等效果；不透明度(Opacity)控制整個圖層（含效果）的可見程度。'},
+  {id:24,type:'single',cat:'op',simType:'toolact',
+   q:'當您______影像時，影像中的像素會發生變化。',
+   opts:['縮放（Scale）','剪裁（Crop）','旋轉（Rotate）','翻轉（Flip）'],
+   ans:1,
+   expl:'使用裁切工具「剪裁」影像時，畫布外的像素會被永久刪除（像素數目改變）。縮放、旋轉、翻轉通常是非破壞性的變換操作。',
+   steps:['工具箱選「裁切工具 (C)」','拖曳定義保留區域','Enter 確認裁切（框外像素被刪除）','取消勾選「刪除裁切的像素」可非破壞裁切']},
+  {id:25,type:'matching',cat:'cn',q:'請將影像檔案格式與其描述配對',
+   items:['TIFF','JPEG','PSD','PNG-8','PNG-24'],
+   opts:['大多數繪圖和頁面配置應用程式支援，用於跨應用程式交換的格式','建議用於具有複雜色彩的靜止影像和相片的有損壓縮格式','支援 Photoshop 所有功能（含圖層）的原生格式','僅支援 256 色、可用來代替 GIF 的格式','支援不限色彩且完全支援透明背景的格式'],
+   ans:[0,1,2,3,4],
+   expl:'TIFF=高品質跨平台；JPEG=照片壓縮有損無透明；PSD=Photoshop原生含圖層；PNG-8=256色小檔；PNG-24=完整色彩+透明去背最佳。'}
+];
+
+// ──────────────── ACCORDION ────────────────
+const typeLabels={single:'單選',multiple:'多選',matching:'配對',truefalse:'是非'};
+const typeTags={single:'tag-s',multiple:'tag-m',matching:'tag-t',truefalse:'tag-tf'};
+function buildAccordion(){
+  const c=document.getElementById('q-accordion');
+  c.innerHTML=QDB.map(q=>{
+    const nc=q.cat==='op'?'op':'cn';
+    return`<div class="acc-item" id="acc-q${q.id}"><div class="acc-head" onclick="toggleAcc(${q.id})"><div class="acc-num ${nc}">Q${q.id}</div><div class="acc-q">${q.q.length>60?q.q.slice(0,60)+'…':q.q}</div><div class="acc-tag ${typeTags[q.type]}">${typeLabels[q.type]}</div><div class="acc-arr">▶</div></div><div class="acc-body"><div class="abi">${buildAccBody(q)}</div></div></div>`;
+  }).join('');
+}
+function buildAccBody(q){
+  let h=`<div class="ans-box">`;
+  if(q.type==='single'){
+    h+=`✅ 正確答案：${String.fromCharCode(65+q.ans)}. ${q.opts[q.ans]}</div>`;
+    h+=`<ul class="opt-disp">${q.opts.map((o,i)=>`<li class="${i===q.ans?'ok':''}">${String.fromCharCode(65+i)}. ${o}</li>`).join('')}</ul>`;
+  }else if(q.type==='multiple'){
+    h+=`✅ 正確答案：${q.ans.map(i=>String.fromCharCode(65+i)+'. '+q.opts[i]).join('、')}</div>`;
+    h+=`<ul class="opt-disp">${q.opts.map((o,i)=>`<li class="${q.ans.includes(i)?'ok':''}">${String.fromCharCode(65+i)}. ${o}</li>`).join('')}</ul>`;
+  }else if(q.type==='matching'){
+    h+=`✅ 正確配對如下：</div>`;
+    h+=`<table class="match-disp">${q.items.map((item,i)=>`<tr><td>${item}</td><td>→</td><td>${q.opts[q.ans[i]]}</td></tr>`).join('')}</table>`;
+  }else if(q.type==='truefalse'){
+    h+=`✅ 判斷結果：</div>`;
+    h+=`<div class="tf-disp">${q.statements.map(s=>`<div class="tf-disp-row"><span class="tf-disp-badge ${s.ans?'ok':'no'}">${s.ans?'O':'X'}</span><span class="tf-disp-text">${s.text}</span></div>`).join('')}</div>`;
+  }
+  h+=`<div class="expl">💡 ${q.expl}</div>`;
+  if(q.steps)h+=`<div class="steps-box"><div class="steps-title">🖥 操作步驟</div><ul class="steps-list">${q.steps.map(s=>`<li>${s}</li>`).join('')}</ul></div>`;
+  return h;
+}
+function toggleAcc(id){document.getElementById('acc-q'+id).classList.toggle('open');}
+
+// ──────────────── SIM RENDERERS ────────────────
+function renderSim(q){
+  switch(q.simType){
+    case'panels': return simPanels(q);
+    case'layers_opc': return simLayersOpc(q);
+    case'filemenu': return simFileMenu(q);
+    case'exportmenu': return simExportMenu(q);
+    case'layermask': return simLayerMask(q);
+    case'gradedit': return simGradEdit(q);
+    case'exportdlg': return simExportDlg(q);
+    case'shapetools': return simShapeTools(q);
+    case'fmtopts': return simFmtOpts(q);
+    case'toolact': return simToolAct(q);
+    default: return '';
+  }
+}
+const panelIcons=['◉','⊡','▥','✦'];
+const panelEnNames=['Swatches','Brushes','Patterns','Shapes'];
+function simPanels(q){
+  return`<div class="sim-wrap"><div class="sim-titlebar"><div class="sim-tb-dot" style="background:#e05252"></div><div class="sim-tb-dot" style="background:#e0a030"></div><div class="sim-tb-dot" style="background:#4ecb71"></div><span style="margin-left:6px">Window → 面板</span></div><div class="panel-grid">${q.opts.map((o,i)=>`<div class="sim-item" data-idx="${i}" onclick="clickSimItem(this)"><div class="panel-card"><div class="panel-icon">${panelIcons[i]||'□'}</div><div class="panel-name">${o}</div><div class="panel-en">${panelEnNames[i]||''}</div></div></div>`).join('')}</div><div class="sim-foot">👆 點擊正確的面板頁籤</div></div>`;
+}
+function simLayersOpc(q){
+  return`<div class="sim-wrap"><div class="sim-titlebar"><div class="sim-tb-dot" style="background:#e05252"></div><div class="sim-tb-dot" style="background:#e0a030"></div><div class="sim-tb-dot" style="background:#4ecb71"></div><span style="margin-left:6px">圖層面板 (Layers)</span></div><div class="ps-lyr-sim-hd"><span>正常 ▼</span><span>鎖定: □□□□</span></div><div class="ps-lyr-fields"><div class="sim-item ps-lf-row" data-idx="0" onclick="clickSimItem(this)"><span>不透明度</span><div class="ps-lf-val">100%</div></div><div class="sim-item ps-lf-row" data-idx="1" onclick="clickSimItem(this)"><span>填　　滿</span><div class="ps-lf-val">100%</div></div></div><div class="ps-lyr-list"><div class="ps-lyr-row actv"><div class="sim-item ps-eye" data-idx="3" onclick="clickSimItem(this)">👁</div><div class="sim-item ps-ct" data-idx="2" onclick="clickSimItem(this)" style="background:linear-gradient(135deg,#f90,#e83)"></div><span class="ps-lname">文字圖層</span><span class="ps-ltag">T</span></div><div class="ps-lyr-row"><div class="ps-eye">👁</div><div class="ps-ct" style="background:linear-gradient(135deg,#e8f4f8,#a8c8e0)"></div><span class="ps-lname">背景</span><span class="ps-lock">🔒</span></div></div><div class="sim-foot">👆 點擊正確的目標元素</div></div>`;
+}
+function simFileMenu(q){
+  return`<div class="sim-wrap"><div class="sim-titlebar"><div class="sim-tb-dot" style="background:#e05252"></div><div class="sim-tb-dot" style="background:#e0a030"></div><div class="sim-tb-dot" style="background:#4ecb71"></div><span style="margin-left:6px">File（檔案）選單</span></div><div class="sim-content" style="padding:6px"><div class="ps-menu-sim">${q.opts.map((o,i)=>`<div class="sim-item" data-idx="${i}" onclick="clickSimItem(this)" style="border-radius:3px;margin-bottom:2px"><div class="ps-menu-item"><span>${o}</span></div></div>`).join('')}</div></div><div class="sim-foot">👆 點擊正確的選單項目</div></div>`;
+}
+function simExportMenu(q){
+  return`<div class="sim-wrap"><div class="sim-titlebar"><div class="sim-tb-dot" style="background:#e05252"></div><div class="sim-tb-dot" style="background:#e0a030"></div><div class="sim-tb-dot" style="background:#4ecb71"></div><span style="margin-left:6px">File → 轉存（Export）子選單</span></div><div class="sim-content" style="padding:6px"><div class="ps-menu-sim">${q.opts.map((o,i)=>`<div class="sim-item" data-idx="${i}" onclick="clickSimItem(this)" style="border-radius:3px;margin-bottom:2px"><div class="ps-menu-item"><span>${o}</span></div></div>`).join('')}</div></div><div class="sim-foot">👆 點擊正確的轉存選項</div></div>`;
+}
+function simLayerMask(q){
+  return`<div class="sim-wrap"><div class="sim-titlebar"><div class="sim-tb-dot" style="background:#e05252"></div><div class="sim-tb-dot" style="background:#e0a030"></div><div class="sim-tb-dot" style="background:#4ecb71"></div><span style="margin-left:6px">圖層面板 (Layers) — 點擊正確元素</span></div><div class="ps-lyr-sim-hd"><span>圖層</span><span style="font-size:9px">👁 ◉ fx ◑ +</span></div><div class="ps-lyr-list" style="padding:6px"><div class="ps-lyr-row actv" style="height:38px"><div class="sim-item ps-eye" data-idx="2" title="眼睛圖示" onclick="clickSimItem(this)" style="padding:2px">👁</div><div class="sim-item ps-ct" data-idx="0" title="圖層縮圖" onclick="clickSimItem(this)" style="background:linear-gradient(135deg,#f90,#c64);width:32px;height:32px"></div><div class="sim-item ps-mk" data-idx="1" title="遮色片縮圖" onclick="clickSimItem(this)" style="width:32px;height:32px"></div><span class="ps-lname" style="font-size:11px">文字圖層</span><span class="ps-ltag">T</span></div><div class="ps-lyr-row" style="height:34px;margin-top:4px"><div class="ps-eye">👁</div><div class="ps-ct" style="background:linear-gradient(135deg,#e8f4f8,#a8c8e0);width:28px;height:28px"></div><span class="ps-lname">背景</span><div class="sim-item ps-lock" data-idx="3" title="鎖定圖示" onclick="clickSimItem(this)" style="font-size:13px;padding:2px">🔒</div></div></div><div style="display:flex;gap:12px;padding:4px 8px;font-size:9px;color:#555;border-top:1px solid rgba(255,255,255,.05)"><span>👁 眼睛圖示</span><span>🖼 圖層縮圖</span><span style="color:#7a7;font-weight:600">□ 遮色片縮圖</span><span>🔒 鎖定</span></div><div class="sim-foot">👆 使用橡皮擦的非破壞性方式，應點擊哪個縮圖？</div></div>`;
+}
+function simGradEdit(q){
+  return`<div class="sim-wrap"><div class="sim-titlebar"><div class="sim-tb-dot" style="background:#e05252"></div><div class="sim-tb-dot" style="background:#e0a030"></div><div class="sim-tb-dot" style="background:#4ecb71"></div><span style="margin-left:6px">漸層編輯器（Gradient Editor）</span></div><div class="sim-content"><div class="ps-ge-wrap"><div class="ps-ge-title">漸層預覽條</div><div class="ps-ge-bar-area"><div class="sim-item" data-idx="3" onclick="clickSimItem(this)" style="position:absolute;top:-22px;left:8px;border-radius:4px;padding:2px" title="不透明度色標（上方）"><div style="width:14px;height:16px;border-radius:3px;border:2px solid #777;background:rgba(255,255,255,.9)"></div><div style="font-size:9px;color:#666;text-align:center;margin-top:1px">▼ 不透明</div></div><div class="ps-ge-bar"><div class="ps-ge-bar-inner"></div></div><div style="display:flex;justify-content:space-between;margin-top:12px;padding:0 4px"><div class="sim-item" data-idx="2" onclick="clickSimItem(this)" title="左端點擊" style="border-radius:4px;padding:2px;text-align:center"><div style="width:14px;height:16px;border-radius:3px;border:2px solid #777;background:#fff;margin:0 auto"></div><div style="font-size:9px;color:#666;margin-top:1px">左端</div></div><div style="flex:1;text-align:center;padding-top:6px"><div class="sim-item" data-idx="0" onclick="clickSimItem(this)" style="display:inline-block;padding:4px 12px;border-radius:4px;font-size:10px;color:#777">預覽條中間</div></div><div class="sim-item" data-idx="1" onclick="clickSimItem(this)" title="白色色標（正確）" style="border-radius:4px;padding:2px;text-align:center"><div style="width:14px;height:16px;border-radius:3px;border:2px solid #aaa;background:#fff;margin:0 auto"></div><div style="font-size:9px;color:#aaa;margin-top:1px;font-weight:500">白色色標</div></div></div></div></div></div><div class="sim-foot">👆 要改變白色端顏色，應按兩下哪個位置？</div></div>`;
+}
+function simExportDlg(q){
+  const rowLabels=['嵌入色彩設定檔 (sRGB)','轉換為 sRGB','轉換為目的地色彩設定檔','套用色彩管理'];
+  return`<div class="sim-wrap"><div class="sim-titlebar"><div class="sim-tb-dot" style="background:#e05252"></div><div class="sim-tb-dot" style="background:#e0a030"></div><div class="sim-tb-dot" style="background:#4ecb71"></div><span style="margin-left:6px">轉存為 — 色彩設定</span></div><div class="sim-content" style="padding:0"><div class="ps-exdlg"><div class="ps-exdlg-hd">色彩 (Color)</div>${q.opts.map((o,i)=>`<div class="sim-item ps-exdlg-row" data-idx="${i}" onclick="clickSimItem(this)"><div class="ps-check">✓</div><span>${rowLabels[i]||o}</span></div>`).join('')}</div></div><div class="sim-foot">👆 點擊需要變更的色彩設定選項</div></div>`;
+}
+const shapeIcons=['⊡','✦','⍟','◈','—','✿'];
+const shapeNames=['矩形工具','橢圓工具','多邊形工具','自定形狀工具','直線工具','自定形狀(進階)'];
+function simShapeTools(q){
+  const flyItems=[
+    {icon:'□',name:'筆刷工具筆刷選單',idx:0},
+    {icon:'✦',name:'形狀工具預設形狀',idx:1},
+    {icon:'𝄞',name:'自定形狀工具 (U)',idx:2},
+    {icon:'▥',name:'圖案面板',idx:3}
+  ];
+  return`<div class="sim-wrap"><div class="sim-titlebar"><div class="sim-tb-dot" style="background:#e05252"></div><div class="sim-tb-dot" style="background:#e0a030"></div><div class="sim-tb-dot" style="background:#4ecb71"></div><span style="margin-left:6px">工具箱 — 要去哪裡找向量音符？</span></div><div class="sim-content" style="padding:6px"><div class="ps-fly">${flyItems.map(item=>`<div class="sim-item" data-idx="${item.idx}" onclick="clickSimItem(this)" style="border-radius:0;margin:0"><div class="ps-fly-item"><div class="ps-fly-icon">${item.icon}</div><span>${item.name}</span></div></div>`).join('')}</div></div><div class="sim-foot">👆 點擊可以找到向量音符的位置</div></div>`;
+}
+function simFmtOpts(q){
+  const descs=['相片，有損壓縮','透明，無損壓縮','動畫，256色','印刷，無損壓縮'];
+  return`<div class="sim-wrap"><div class="sim-titlebar"><div class="sim-tb-dot" style="background:#e05252"></div><div class="sim-tb-dot" style="background:#e0a030"></div><div class="sim-tb-dot" style="background:#4ecb71"></div><span style="margin-left:6px">File → 轉存 — 快速轉存預設格式</span></div><div class="fmt-grid">${q.opts.map((o,i)=>`<div class="sim-item" data-idx="${i}" onclick="clickSimItem(this)"><div class="fmt-card"><div class="fmt-ext">${o}</div><div class="fmt-desc">${descs[i]||''}</div></div></div>`).join('')}</div><div class="sim-foot">👆 快速轉存的預設輸出格式是哪個？</div></div>`;
+}
+const toolIcons=['↔','✂','↩','↔↕'];
+function simToolAct(q){
+  return`<div class="sim-wrap"><div class="sim-titlebar"><div class="sim-tb-dot" style="background:#e05252"></div><div class="sim-tb-dot" style="background:#e0a030"></div><div class="sim-tb-dot" style="background:#4ecb71"></div><span style="margin-left:6px">哪個操作會改變影像像素？</span></div><div class="tact-grid">${q.opts.map((o,i)=>`<div class="sim-item" data-idx="${i}" onclick="clickSimItem(this)"><div class="tact-card"><div class="tact-icon">${toolIcons[i]||'□'}</div><div class="tact-name">${o.split('（')[0]}</div><div class="tact-en">${o.match(/（(.+)）/)?.[1]||''}</div></div></div>`).join('')}</div><div class="sim-foot">👆 哪個操作執行後，影像的像素數目會改變？</div></div>`;
+}
+
+// ──────────────── SCOPE SELECTOR ────────────────
+let examScope='all';
+function selectScope(s){
+  examScope=s;
+  document.querySelectorAll('.scope-card').forEach(c=>c.classList.remove('active'));
+  document.getElementById('sc-'+s).classList.add('active');
+}
+
+// ──────────────── YORK MULTIPLE-CHOICE (YDB2) ────────────────
+const YDB2=[
+  {id:'Y1',type:'single',cat:'op',york:true,q:'要將「最新追蹤標誌」圖層水平翻轉，應使用哪個選單路徑？',opts:['影像→旋轉版面→水平翻轉版面','編輯→變形→水平翻轉','圖層→排列順序→翻轉','濾鏡→扭曲→水平反轉'],ans:1,expl:'「編輯→變形→水平翻轉」只翻轉目前圖層；「影像→旋轉版面→水平翻轉版面」翻轉整個畫布。注意兩者的差別！'},
+  {id:'Y2',type:'single',cat:'op',york:true,q:'要設定圖層的混合模式和不透明度，應在哪裡操作？',opts:['選單「圖層」→「圖層內容選項」','圖層面板頂端：左側混合模式下拉 + 右側不透明度欄位','選項列的流量與不透明度','選單「影像」→「調整」→「亮度/對比」'],ans:1,expl:'圖層面板頂端：左邊下拉選單＝混合模式（預設「正常」），右邊數字欄位＝不透明度，兩個設定都在圖層面板頂端一排。'},
+  {id:'Y3',type:'single',cat:'op',york:true,q:'要讓 Photoshop 每 15 分鐘自動儲存一次復原資訊，應前往哪個設定路徑？',opts:['編輯→偏好設定→效能','視窗→工作區→自動儲存設定','檔案→偏好設定→一般','編輯→偏好設定→檔案處理'],ans:3,expl:'「自動儲存修復資訊間隔」設定位於「編輯→偏好設定→檔案處理」中，可設定每 5/10/15/30/60 分鐘自動儲存。'},
+  {id:'Y4',type:'single',cat:'op',york:true,q:'要在矩形區域內輸入多行文字，建立「單一文字圖層」，正確做法是？',opts:['使用垂直文字工具點一下，再手動按 Enter 換行','使用水平文字工具在矩形內拖曳建立段落文字框','使用路徑文字工具沿矩形邊緣輸入','建立兩個文字圖層再從選單合併'],ans:1,expl:'水平文字工具 (T) 在區域「拖曳」建立段落文字框，可在框內自動換行輸入多行文字，形成單一文字圖層。「點一下」只建立點狀文字，不能自動換行。'},
+  {id:'Y5',type:'single',cat:'op',york:true,q:'要查看某文字圖層的行距數值，再將另一圖層設為相同行距，應使用哪個面板？',opts:['屬性面板（Properties）','段落面板（Paragraph）','字元面板（Character）','圖層面板（Layers）'],ans:2,expl:'字元面板（視窗→字元）顯示行距（Leading）數值——符號為兩個 A 疊加的圖示，可直接輸入數值設定。'},
+  {id:'Y6',type:'single',cat:'op',york:true,q:'要修改文件中繼資料的「版權狀態」為受版權保護，應前往？',opts:['編輯→顏色設定','影像→影像大小','檔案→檔案資訊','視窗→資訊'],ans:2,expl:'「檔案→檔案資訊」（File Info）可設定版權狀態（版權所有/公共財產/未知）、版權年份、作者等中繼資料。'},
+  {id:'Y7',type:'single',cat:'op',york:true,q:'新增獅子形狀並讓填色為取樣色彩、無線條，以下哪個步驟順序正確？',opts:['先繪製形狀，再用油漆桶填色','先選滴管取色，再選自訂形狀工具繪製，選項列筆畫設「無色彩」','先設定前景色，再用鋼筆工具描路徑','開啟形狀庫直接拖曳形狀至畫布'],ans:1,expl:'滴管工具吸取的顏色成為前景色；接著選自訂形狀工具繪製時自動套用該前景色；選項列「筆畫→無色彩」可移除外框線。'},
+  {id:'Y8',type:'single',cat:'op',york:true,q:'要在精確的 100 像素位置新增水平參考線，最正確的方法是？',opts:['從水平尺標拖曳，目測停在 100px 位置','選單「檢視」→「新增參考線」→ 輸入方向和位置數值','選單「編輯」→「偏好設定」→「參考線、格點與切片」','使用尺標工具測量後手動建立'],ans:1,expl:'「檢視→新增參考線」可精確輸入方向（水平/垂直）與像素位置，避免拖曳時的人眼誤差。'},
+  {id:'Y9',type:'single',cat:'op',york:true,q:'要填滿影像空白區域，使其自然融合周圍天空，應使用哪個功能？',opts:['編輯→填滿→前景色','編輯→內容感知填色','濾鏡→消除雜訊→塵點和刮痕','影像→調整→色階'],ans:1,expl:'選取空白區域後，「編輯→內容感知填色」可智慧分析周圍像素並自動填充，結果比手動操作更自然無縫。'},
+  {id:'Y10',type:'single',cat:'op',york:true,q:'要非破壞性地新增「臨界值」調整效果，應使用哪個方法？',opts:['影像→調整→臨界值（直接修改像素）','濾鏡→素描→影印','圖層→新增調整圖層→臨界值','圖層→圖層樣式→顏色覆蓋'],ans:2,expl:'「新增調整圖層→臨界值」是非破壞性的，可隨時修改或刪除，不影響原始圖層。「影像→調整」直接修改像素，無法完全復原。'},
+  {id:'Y11',type:'single',cat:'op',york:true,q:'套用「平滑外斜角、深度 200%、大小 7px」圖層樣式，應使用哪個路徑？',opts:['選單「圖層」→「圖層內容選項」→斜角設定','圖層面板下方 fx 按鈕→斜角與浮雕→設定各參數','濾鏡→素描→凸印','選單「圖層」→「排列順序」→「浮雕效果」'],ans:1,expl:'圖層樣式「斜角與浮雕」在圖層面板底部的 fx 按鈕（或「圖層→圖層樣式」），「樣式」選外斜角、「技術」選平滑，再輸入深度和尺寸。'},
+  {id:'Y12',type:'single',cat:'op',york:true,q:'選取多個圖層後，以下哪個快速鍵可以直接建立群組？',opts:['Ctrl+E','Ctrl+G','Ctrl+Shift+G','Alt+G'],ans:1,expl:'Ctrl+G 將選取中的圖層建立成群組；Ctrl+E 是合併圖層；Ctrl+Shift+G 是取消群組化。'},
+  {id:'Y13',type:'single',cat:'op',york:true,q:'要將「沙龍」圖層的圖層樣式複製並貼上至「美髮」圖層，正確方式是？',opts:['按住 Alt 將圖層效果拖曳到目標圖層','右鍵點沙龍圖層→拷貝圖層樣式，右鍵點美髮圖層→貼上圖層樣式','選取兩個圖層→圖層→合併圖層樣式','選單「編輯」→「貼上特殊內容」→「圖層樣式」'],ans:1,expl:'圖層面板右鍵選單的「拷貝圖層樣式」/「貼上圖層樣式」是最標準的做法。按住 Alt 拖曳效果雖可行，但右鍵方式更穩定。'},
+  {id:'Y14',type:'single',cat:'op',york:true,q:'要非破壞性地調整影像的「自然飽和度」，應使用哪種方法？',opts:['影像→調整→自然飽和度','影像→調整→色相/飽和度','圖層→新增調整圖層→自然飽和度','濾鏡→Camera Raw 濾鏡'],ans:2,expl:'「新增調整圖層→自然飽和度」是非破壞性的，可隨時修改數值或刪除。「影像→調整」直接修改圖層像素，是破壞性操作。'},
+  {id:'Y15',type:'single',cat:'op',york:true,q:'要快速連續隱藏圖層面板中的多個圖層，最有效率的方法是？',opts:['選取所有圖層，選單「圖層」→「隱藏圖層」','在最上方圖層的眼睛處按住滑鼠，不放，往下拖曳到最底層','按住 Shift 逐一點擊眼睛圖示','選取圖層後按 Ctrl+H'],ans:1,expl:'在眼睛圖示上按住往下拖曳是 PS 的快速連續開關技巧，非常高效。Ctrl+H 是隱藏「輔助線/邊緣」，不是隱藏圖層。'},
+  {id:'Y16',type:'single',cat:'op',york:true,q:'要將文件色彩模式改為 CMYK 並保留所有圖層，操作完成後應按哪個按鈕？',opts:['合併（Flatten）','不要合併（Don\'t Flatten）','取消（Cancel）','自動合併'],ans:1,expl:'改變色彩模式時，選「合併」會把所有圖層壓平成單一背景；選「不要合併」則保留所有圖層結構。'},
+  {id:'Y17',type:'single',cat:'op',york:true,q:'要用魔術棒選取影像中所有不連續的黑色像素，應如何設定選項？',opts:['容許度 32、勾選「連續的」','容許度 100、不勾選「消除鋸齒」','容許度 0、不勾選「連續的」','容許度 0、勾選「連續的」'],ans:2,expl:'容許度 0 只選純黑色；不勾選「連續的」讓工具選取圖層中所有不相連的同色區域，而非只選相鄰像素。'},
+  {id:'Y18',type:'single',cat:'op',york:true,q:'要確保新建的群組位於圖層面板的正確位置，最直觀的操作是？',opts:['建立後用選單「圖層」→「排列順序」移動','在圖層面板中直接拖曳群組至目標位置','選取群組後按 Ctrl+] 多次移動','右鍵群組→排列順序→置於前'],ans:1,expl:'圖層面板中直接拖曳最直觀，可精確控制位置。Ctrl+] 是每次往上移一層，效率較低。'},
+  {id:'Y19',type:'single',cat:'op',york:true,q:'要將商業印刷（CMYK）文件改為螢幕瀏覽用色彩模式且不平面化圖層，正確步驟是？',opts:['影像→模式→RGB 色彩→點「合併」','影像→模式→RGB 色彩→點「不要合併」','編輯→轉換至設定檔→sRGB','檔案→另存新檔→選 RGB 格式'],ans:1,expl:'改變色彩模式時選「不要合併」保留所有圖層。「編輯→轉換至設定檔」可轉換色彩空間，但無法直接切換色彩模式。'},
+  {id:'Y20',type:'single',cat:'op',york:true,q:'使用快速選取工具時，若選取了多餘的背景區域，應使用選項列的哪個模式去除？',opts:['增加至選取範圍（+）','新選取範圍（重新開始）','從選取範圍減去（-）','交集選取範圍'],ans:2,expl:'快速選取工具選項列三個模式：新增、增加（+）、減去（-）。要去除多餘區域，切換到「從選取範圍減去（-）」，在多餘區域塗抹即可。'},
+  {id:'Y21',type:'single',cat:'op',york:true,q:'要讓圖層能套用日後可修改的非破壞性濾鏡，需先做什麼？',opts:['圖層→點陣化→圖層，再套用濾鏡','在圖層上右鍵→轉換為智慧型物件','建立圖層群組後再套用濾鏡','選單「濾鏡」→「液化」先執行一次再取消'],ans:1,expl:'轉換為智慧型物件後，所有套用的濾鏡都成為「智慧型濾鏡」，可雙擊修改參數或關閉/刪除，是非破壞性的。'},
+  {id:'Y22',type:'single',cat:'op',york:true,q:'在 Photoshop 2025 的「樣式」面板中，要找到「亮度立方體」等舊版樣式，應如何操作？',opts:['直接在面板搜尋欄輸入名稱','樣式面板右上角功能表→舊版樣式和更多→所有舊版預設樣式→舊版預設樣式','編輯→預設集→預設集管理員→樣式','視窗→預設集→載入舊版樣式'],ans:1,expl:'Photoshop 2021 後把舊版樣式移到「樣式面板右上角功能表」，需展開「舊版樣式和更多」才能找到。'},
+  {id:'Y23',type:'single',cat:'op',york:true,q:'要沿文字建立精確的上下水平參考線和左側垂直參考線，首要條件是？',opts:['先確認「檢視→尺標」已顯示，才能從尺標拖曳','先執行「選取→全部」再建立參考線','先使用「切片工具」標記文字範圍','先鎖定所有圖層再操作'],ans:0,expl:'從尺標拖曳參考線需要尺標先顯示（Ctrl+R 切換）。選取各文字圖層後，從水平尺標拖出兩條水平線（文字上下），從垂直尺標拖出一條垂直線（文字左側）。'},
+  {id:'Y24',type:'single',cat:'op',york:true,q:'混合模式「柔光」（Soft Light）的效果描述，以下哪個正確？',opts:['讓上方圖層完全透明，顯示下方圖層','依上方圖層的明暗，使結果變亮或加深，對比度較強烈光源柔和','將上方圖層顏色與下方圖層相乘，使影像變深','讓上方和下方圖層顏色完全相加，使影像變亮'],ans:1,expl:'柔光（Soft Light）：上方圖層亮的部分讓結果變亮，暗的部分讓結果變暗，效果比「強烈光源」更柔和，適合增加微妙對比。'},
+  {id:'Y25',type:'single',cat:'op',york:true,q:'要設定文字的字體、大小、粗細和顏色，應開啟哪個面板？',opts:['屬性面板（Properties）','段落面板（Paragraph）','字元面板（Character）','圖層面板（Layers）'],ans:2,expl:'字元面板（視窗→字元）控制字體、大小、粗細、字距、行距、顏色等字元屬性。段落面板控制對齊和縮排。'},
+  {id:'Y26',type:'single',cat:'op',york:true,q:'建立圓角矩形後，要讓它對齊文件（畫布）的水平和垂直中心，應使用？',opts:['自由變形（Ctrl+T）→輸入座標值','Ctrl+A 全選後用移動工具的對齊按鈕','選項列「路徑對齊方式」→對齊至「畫布」→水平居中+垂直居中','圖層→對齊圖層至選取範圍'],ans:2,expl:'建立形狀後，選項列出現「路徑對齊方式」，設定對齊至「畫布」，再分別點「水平居中」和「垂直居中」即可精確居中。'},
+  {id:'Y27',type:'single',cat:'op',york:true,q:'要將圖層從目前位置移入現有群組的指定位置，應如何操作？',opts:['Ctrl+X 剪下後 Ctrl+V 貼入群組','在圖層面板中將圖層拖曳至群組內的正確位置','右鍵圖層→移至群組→選目標群組','選取圖層→圖層→建立剪裁遮色片'],ans:1,expl:'圖層面板中直接拖曳最直觀，看到目標位置出現藍線時放開即可。注意要拖入群組「內部」，不是群組上方。'},
+  {id:'Y28',type:'single',cat:'op',york:true,q:'要用「內容感知」移除照片中的背景人物，第一步應做什麼？',opts:['先點選「內容感知填色」選項然後塗抹人物','先用選取工具框選人物，再執行編輯→填滿→內容感知','直接用橡皮擦擦掉人物','先複製圖層，再使用汙點修復筆刷'],ans:1,expl:'「內容感知填色」需要先有選取範圍才能作用。先用套索/矩形框選人物，再「編輯→填滿→內容感知」，PS 自動填充背景。'},
+  {id:'Y29',type:'single',cat:'op',york:true,q:'使用「修補工具」修復損壞區域時，正確操作是？',opts:['按 Alt 點好的區域取樣，再塗抹損壞區域（像仿製印章）','在損壞區域畫出選取範圍，再拖曳選取範圍至乾淨的參考區域','直接點擊損壞區域，系統自動找最佳來源','先選好的區域再拖曳至損壞處'],ans:1,expl:'修補工具的方向：先選「問題」區域，再拖曳到「乾淨」的參考區域，PS 用參考區域紋理填充問題區域。注意：仿製印章工具才是 Alt+點取樣。'},
+  {id:'Y30',type:'single',cat:'op',york:true,q:'「圖層遮色片」中白色和黑色分別代表什麼效果？',opts:['黑色=顯示內容，白色=隱藏內容','白色=顯示內容，黑色=隱藏內容','灰色=半透明，黑白顏色可自由指定','顏色深淺不影響遮色片效果'],ans:1,expl:'遮色片口訣：「White Reveals, Black Conceals」（白色顯示、黑色隱藏）。用白色筆刷塗抹=顯示，黑色筆刷=隱藏，灰色=半透明。'},
+  {id:'Y31',type:'single',cat:'op',york:true,q:'圖層面板「鎖定」列由左至右有四個圖示，「鎖定位置」是哪個？',opts:['第一個（鎖定透明像素）','第二個（鎖定影像像素）','第三個（鎖定位置）','第四個（全部鎖定）'],ans:2,expl:'鎖定列從左到右：①鎖定透明像素（棋盤格）②鎖定影像像素（筆刷）③鎖定位置（移動箭頭）④全部鎖定（鎖頭）。鎖定位置後圖層內容可編輯，但不能用移動工具拖移。'},
+  {id:'Y32',type:'single',cat:'op',york:true,q:'建立用於商業印刷的文件時，色彩模式應設定為？',opts:['RGB 色彩（8位元）','Lab 色彩','CMYK 色彩','索引色（256色）'],ans:2,expl:'商業印刷使用四色印刷（青/洋紅/黃/黑），需要 CMYK 色彩模式。RGB 是螢幕顯示用；索引色只有256色，不適合印刷。'},
+  {id:'Y33',type:'single',cat:'op',york:true,q:'建立供高品質列印的 A4 文件，以下哪個解析度和色彩模式組合最合適？',opts:['72 ppi + RGB 色彩','96 ppi + RGB 色彩','150 ppi + RGB 色彩','360 ppi + CMYK 色彩'],ans:3,expl:'網頁/螢幕 72-96 ppi；一般列印 150-200 ppi；高品質專業印刷需 300 ppi 以上。搭配印刷必要的 CMYK 色彩模式，360 ppi + CMYK 為正確選擇。'},
+  {id:'Y34',type:'single',cat:'op',york:true,q:'要讓「快速轉存」輸出的檔案自動附帶版權資訊，應在哪裡設定？',opts:['編輯→偏好設定→效能','檔案→轉存→轉存偏好設定','編輯→顏色設定','檔案→檔案資訊→版權'],ans:1,expl:'「檔案→轉存→轉存偏好設定」可設定「快速轉存中繼資料」為「版權與聯絡資訊」，之後每次快速轉存都會自動附加。'},
+  {id:'Y35',type:'single',cat:'op',york:true,q:'要建立 HDV/HDTV 720p 的視訊文件，在「開新檔案」中應選哪個類別？',opts:['列印（Print）','網頁（Web）','行動裝置（Mobile）','影片和視訊（Film & Video）'],ans:3,expl:'「開新檔案」類別：列印=高解析印刷；網頁=螢幕低解析；行動裝置=手機平板；影片和視訊=影片製作預設（HDV/HDTV/DV等）。'}
+];
+
+// ──────────────── EXAM LOGIC ────────────────
+let QS={current:0,score:0,wrong:[],answered:false,pool:[],shuffled:[]};
+function shuffle(arr){for(let i=arr.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[arr[i],arr[j]]=[arr[j],arr[i]];}return arr;}
+function startExam(){
+  let pool;
+  if(examScope==='a') pool=[...QDB];
+  else if(examScope==='b') pool=[...YDB2];
+  else pool=[...QDB,...YDB2];
+  document.getElementById('exam-start').style.display='none';
+  document.getElementById('exam-result').style.display='none';
+  document.getElementById('exam-quiz').style.display='block';
+  QS={current:0,score:0,wrong:[],answered:false,pool,shuffled:shuffle([...Array(pool.length).keys()])};
+  showQuestion();
+}
+function showQuestion(){
+  const q=QS.pool[QS.shuffled[QS.current]];
+  const total=QS.pool.length;
+  QS.answered=false;
+  document.getElementById('qprog-txt').textContent=`第 ${QS.current+1} / ${total} 題`;
+  document.getElementById('qprog-fill').style.width=`${(QS.current/total)*100}%`;
+  document.getElementById('qscore-badge').textContent=`得分 ${QS.score}`;
+  let typeLabel=q.simType?'🖱 點擊模擬':q.york?'🔧 操作判斷':q.cat==='op'?'🖥 軟體操作':'💡 概念理解';
+  document.getElementById('qcard-num').textContent=`題目 ${QS.current+1} ${typeLabel}`;
+  document.getElementById('qcard-text').textContent=q.q;
+  document.getElementById('qcard-hint').textContent=q.type==='multiple'?`（請選擇 ${q.count} 個答案）`:q.type==='truefalse'?'（請對每個敘述選擇 O 正確 或 X 錯誤）':'';
+  document.getElementById('fb-area').classList.remove('show');
+  document.getElementById('btn-confirm').disabled=true;
+  document.getElementById('btn-confirm').style.display='inline-block';
+  const card=document.getElementById('qcard');
+  card.classList.remove('card-glitch','card-success');
+  renderQuestion(q);
+}
+function renderQuestion(q){
+  const body=document.getElementById('qcard-body');
+  if(q.simType){
+    body.innerHTML=renderSim(q);
+    return;
+  }
+  if(q.type==='single'||q.type==='multiple'){
+    const shuffled=shuffle(q.opts.map((o,i)=>({text:o,idx:i})));
+    window._curShuffled=shuffled;
+    body.innerHTML=`<div class="opt-list-q">${shuffled.map((o,i)=>`<button class="oq" data-idx="${o.idx}" onclick="selectOpt(this,${q.type==='multiple'})"><div class="oq-lbl">${String.fromCharCode(65+i)}</div><span>${o.text}</span></button>`).join('')}</div>`;
+  }else if(q.type==='matching'){
+    const shuffledDefs=shuffle(q.opts.map((o,i)=>({text:o,idx:i})));
+    window._curShuffled=shuffledDefs;
+    body.innerHTML=`<div class="match-rows">${q.items.map((item,i)=>{
+      const hasIcons=q.icons&&q.icons[i];
+      const hasGrads=q.grads&&q.grads[i];
+      let mitemHtml=`<div class="mitem${hasIcons||hasGrads?' enh':''}">`;
+      if(hasIcons)mitemHtml+=`<div class="mitem-icon" style="font-size:14px">${q.icons[i]}</div>`;
+      if(hasGrads)mitemHtml+=`<div class="mitem-icon"><div style="width:100%;height:100%;background:${q.grads[i]}"></div></div>`;
+      mitemHtml+=`<span>${item}</span></div>`;
+      return`<div class="mrow">${mitemHtml}<div class="marr">→</div><select class="msel" data-item="${i}" onchange="checkMatchReady()"><option value="">— 請選擇 —</option>${shuffledDefs.map(d=>`<option value="${d.idx}">${d.text}</option>`).join('')}</select></div>`;
+    }).join('')}</div>`;
+  }else if(q.type==='truefalse'){
+    body.innerHTML=`<div class="tf-rows">${q.statements.map((s,i)=>`<div class="tfrow"><div class="tfrow-text">${s.text}</div><div class="tfrow-btns"><button class="tfbtn" data-row="${i}" data-val="true" onclick="selectTF(this)">O</button><button class="tfbtn" data-row="${i}" data-val="false" onclick="selectTF(this)">X</button></div></div>`).join('')}</div>`;
+  }
+}
+function clickSimItem(el){
+  if(QS.answered)return;
+  document.querySelectorAll('.sim-item').forEach(i=>i.classList.remove('sel'));
+  el.classList.add('sel');
+  document.getElementById('btn-confirm').disabled=false;
+}
+function selectOpt(el,isMulti){
+  if(QS.answered)return;
+  if(!isMulti){document.querySelectorAll('.oq').forEach(b=>b.classList.remove('sel'));el.classList.add('sel');}
+  else el.classList.toggle('sel');
+  document.getElementById('btn-confirm').disabled=document.querySelectorAll('.oq.sel').length===0;
+}
+function selectTF(el){
+  if(QS.answered)return;
+  const row=el.dataset.row;
+  document.querySelectorAll(`.tfbtn[data-row="${row}"]`).forEach(b=>{b.classList.remove('st','sf')});
+  el.classList.add(el.dataset.val==='true'?'st':'sf');
+  const total=document.querySelectorAll('.tfrow').length;
+  const answered=document.querySelectorAll('.tfbtn.st,.tfbtn.sf').length/2;
+  document.getElementById('btn-confirm').disabled=answered<total;
+}
+function checkMatchReady(){
+  const sels=document.querySelectorAll('.msel');
+  document.getElementById('btn-confirm').disabled=![...sels].every(s=>s.value!=='');
+}
+function confirmAnswer(){
+  if(QS.answered)return;
+  QS.answered=true;
+  const q=QS.pool[QS.shuffled[QS.current]];
+  let correct=false;
+  if(q.simType){
+    const sel=document.querySelector('.sim-item.sel');
+    if(!sel)return;
+    const selIdx=parseInt(sel.dataset.idx);
+    correct=(selIdx===q.ans);
+    document.querySelectorAll('.sim-item').forEach(item=>{
+      const idx=parseInt(item.dataset.idx);
+      if(idx===q.ans)item.classList.add('sok');
+      else if(item.classList.contains('sel'))item.classList.add('sbad');
+      item.onclick=null;
+    });
+  }else if(q.type==='single'){
+    const sel=document.querySelector('.oq.sel');
+    correct=(parseInt(sel.dataset.idx)===q.ans);
+    document.querySelectorAll('.oq').forEach(b=>{
+      b.disabled=true;
+      if(parseInt(b.dataset.idx)===q.ans)b.classList.add('ans-ok');
+      else if(b.classList.contains('sel'))b.classList.add('ans-bad');
+    });
+  }else if(q.type==='multiple'){
+    const sels=[...document.querySelectorAll('.oq.sel')].map(b=>parseInt(b.dataset.idx)).sort();
+    correct=JSON.stringify(sels)===JSON.stringify([...q.ans].sort());
+    document.querySelectorAll('.oq').forEach(b=>{
+      b.disabled=true;
+      if(q.ans.includes(parseInt(b.dataset.idx)))b.classList.add('ans-ok');
+      else if(b.classList.contains('sel'))b.classList.add('ans-bad');
+    });
+  }else if(q.type==='matching'){
+    const sels=document.querySelectorAll('.msel');
+    correct=true;
+    sels.forEach((sel,i)=>{
+      sel.disabled=true;
+      if(parseInt(sel.value)===q.ans[i])sel.classList.add('m-ok');
+      else{sel.classList.add('m-bad');correct=false;}
+    });
+  }else if(q.type==='truefalse'){
+    correct=true;
+    q.statements.forEach((s,i)=>{
+      const sb=document.querySelector(`.tfbtn.st[data-row="${i}"],.tfbtn.sf[data-row="${i}"]`);
+      if(!sb){correct=false;return;}
+      if((sb.dataset.val==='true')!==s.ans){correct=false;}
+      document.querySelectorAll(`.tfbtn[data-row="${i}"]`).forEach(b=>b.disabled=true);
+    });
+  }
+  if(correct){QS.score++;showFeedback(true,q);triggerFireworks();triggerSuccessCard();spawnScoreFloat();}
+  else{QS.wrong.push(q.id);showFeedback(false,q);triggerGlitch();}
+  document.getElementById('btn-confirm').style.display='none';
+  document.getElementById('btn-next').textContent=QS.current<QDB.length-1?'繼續下一題 →':'查看成績 →';
+}
+function showFeedback(correct,q){
+  const area=document.getElementById('fb-area');
+  document.getElementById('fb-banner').className='fb-banner '+(correct?'fb-ok':'fb-bad');
+  document.getElementById('fb-emoji').textContent=correct?'🎉':'💥';
+  document.getElementById('fb-title').textContent=correct?'答對了！太棒了！':'答錯了！來看看正確答案';
+  const corrEl=document.getElementById('fb-correct');
+  if(!correct){
+    let ans='';
+    if(q.simType||q.type==='single')ans=`正確答案：${q.opts[q.ans]}`;
+    else if(q.type==='multiple')ans=`正確答案：${q.ans.map(i=>q.opts[i]).join('、')}`;
+    else if(q.type==='matching')ans=`正確配對：${q.items.map((item,i)=>`${item}→${q.opts[q.ans[i]]}`).join('；')}`;
+    else if(q.type==='truefalse')ans=`正確判斷：${q.statements.map(s=>`${s.ans?'O':'X'}`).join('')}`;
+    corrEl.textContent=ans;corrEl.style.display='block';
+  }else corrEl.style.display='none';
+  document.getElementById('fb-body').textContent=q.expl;
+  area.classList.add('show');
+}
+function nextQuestion(){
+  QS.current++;
+  if(QS.current>=QS.pool.length)showResults();
+  else showQuestion();
+}
+function showResults(){
+  document.getElementById('exam-quiz').style.display='none';
+  document.getElementById('exam-result').style.display='block';
+  const score=QS.score,total=QS.pool.length;
+  document.getElementById('res-num').textContent=score;
+  document.getElementById('res-den').textContent='/'+total;
+  const pct=score/total;
+  let stars,h2,msg;
+  if(pct>=0.88){stars='⭐⭐⭐';h2='優秀！準備充分！';msg='成績非常好，考試通過機率很高！'}
+  else if(pct>=0.72){stars='⭐⭐';h2='不錯！還有進步空間';msg='大部分掌握了，再複習一下錯題就能更穩。'}
+  else if(pct>=0.5){stars='⭐';h2='繼續加油！';msg='基礎知識還需加強，建議多看詳解。'}
+  else{stars='📚';h2='需要多多複習';msg='別氣餒！查看詳解後再試一次，一定會進步！'}
+  document.getElementById('res-stars').textContent=stars;
+  document.getElementById('res-h2').textContent=h2;
+  document.getElementById('res-msg').textContent=`${score}/${total} (${Math.round(pct*100)}%) — ${msg}`;
+  if(QS.wrong.length>0){
+    document.getElementById('wrongs-section').style.display='block';
+    document.getElementById('wrong-list').innerHTML=QS.wrong.map(id=>{
+      const sid=String(id);
+      const q=QS.pool.find(q=>String(q.id)===sid);
+      if(!q)return'';
+      const lbl=sid.startsWith('Y')?'Y'+sid.slice(1):'Q'+sid;
+      return`<div class="wrong-item" onclick="goToQ('${sid}')">❌ ${lbl}：${q.q.slice(0,40)}…</div>`;
+    }).join('');
+  }else document.getElementById('wrongs-section').style.display='none';
+  if(pct===1)triggerFireworks();
+}
+function goToQ(id){
+  const sid=String(id);
+  if(sid.startsWith('Y')){
+    goPage('questions',null);
+    setTimeout(()=>{
+      const btn=document.querySelectorAll('.qtab-btn')[1];
+      switchQTab('b',btn);
+      const el=document.getElementById('york-q'+sid.slice(1));
+      if(el){el.scrollIntoView({behavior:'smooth',block:'center'});el.classList.add('open');}
+    },300);
+  }else{
+    goPage('questions',null);
+    setTimeout(()=>{const el=document.getElementById('acc-q'+sid);if(el){el.scrollIntoView({behavior:'smooth',block:'center'});el.classList.add('open');}},200);
+  }
+}
+
+// ──────────────── FIREWORKS ────────────────
+const fwCanvas=document.getElementById('fw-canvas');
+const fwCtx=fwCanvas.getContext('2d');
+let fwParticles=[],fwRunning=false,fwTimer=null;
+function resizeFW(){fwCanvas.width=window.innerWidth;fwCanvas.height=window.innerHeight;}
+window.addEventListener('resize',resizeFW);resizeFW();
+function triggerFireworks(){
+  fwCanvas.style.display='block';fwParticles=[];fwRunning=true;
+  const colors=['#ff6b6b','#ffd93d','#6bcb77','#4d96ff','#ff9f43','#da77ff','#ff6bcb','#4ecb71'];
+  for(let k=0;k<7;k++){setTimeout(()=>{if(!fwRunning)return;const x=fwCanvas.width*(0.15+Math.random()*.7);const y=fwCanvas.height*(0.12+Math.random()*.5);const color=colors[Math.floor(Math.random()*colors.length)];for(let i=0;i<70;i++){const angle=(Math.PI*2*i)/70;const speed=Math.random()*6+3;fwParticles.push({x,y,vx:Math.cos(angle)*speed,vy:Math.sin(angle)*speed,color,alpha:1,r:Math.random()*2.5+1,tail:[]});}},k*220);}
+  animateFW();if(fwTimer)clearTimeout(fwTimer);fwTimer=setTimeout(stopFW,2800);
+}
+function animateFW(){
+  if(!fwRunning)return;
+  fwCtx.clearRect(0,0,fwCanvas.width,fwCanvas.height);
+  fwParticles=fwParticles.filter(p=>p.alpha>0.02);
+  for(const p of fwParticles){
+    p.tail.push({x:p.x,y:p.y,a:p.alpha});if(p.tail.length>5)p.tail.shift();
+    for(let i=0;i<p.tail.length;i++){fwCtx.save();fwCtx.globalAlpha=p.tail[i].a*(i/p.tail.length)*.4;fwCtx.fillStyle=p.color;fwCtx.beginPath();fwCtx.arc(p.tail[i].x,p.tail[i].y,p.r*.6,0,Math.PI*2);fwCtx.fill();fwCtx.restore();}
+    p.x+=p.vx;p.y+=p.vy;p.vy+=0.08;p.vx*=.98;p.alpha-=.013;
+    fwCtx.save();fwCtx.globalAlpha=p.alpha;fwCtx.fillStyle=p.color;fwCtx.beginPath();fwCtx.arc(p.x,p.y,p.r,0,Math.PI*2);fwCtx.fill();fwCtx.restore();
+  }
+  requestAnimationFrame(animateFW);
+}
+function stopFW(){fwRunning=false;fwCanvas.style.display='none';fwCtx.clearRect(0,0,fwCanvas.width,fwCanvas.height);fwParticles=[];}
+
+// ──────────────── GLITCH ────────────────
+function triggerGlitch(){
+  const card=document.getElementById('qcard');
+  const overlay=document.getElementById('glitch-overlay');
+  card.classList.remove('card-success');void card.offsetWidth;card.classList.add('card-glitch');
+  overlay.classList.remove('on');void overlay.offsetWidth;overlay.classList.add('on');
+  setTimeout(()=>{card.classList.remove('card-glitch');overlay.classList.remove('on');},700);
+}
+function triggerSuccessCard(){const card=document.getElementById('qcard');card.classList.remove('card-glitch');void card.offsetWidth;card.classList.add('card-success');}
+function spawnScoreFloat(){const el=document.createElement('div');el.className='score-float';el.textContent='+1 ✓';el.style.left=(window.innerWidth/2-30)+'px';el.style.top=(window.innerHeight*.45)+'px';document.body.appendChild(el);setTimeout(()=>el.remove(),1400);}
+
+// ──────────────── Q-PAGE TABS ────────────────
+function switchQTab(id,el){
+  document.querySelectorAll('.qtab-btn').forEach(b=>b.classList.remove('active'));
+  document.querySelectorAll('.qtab-pane').forEach(p=>p.classList.remove('active'));
+  el.classList.add('active');
+  document.getElementById('qtab-'+id).classList.add('active');
+}
+
+// ──────────────── YORK QDB ────────────────
+const YORK_CATS={
+  lyr:{label:'圖層變形',color:'rgba(91,141,238,.12)',tc:'var(--acc)'},
+  blend:{label:'混合模式',color:'rgba(160,100,220,.12)',tc:'#c080ff'},
+  set:{label:'偏好/版權',color:'rgba(224,160,48,.12)',tc:'var(--warn)'},
+  txt:{label:'文字排版',color:'rgba(76,203,113,.12)',tc:'var(--ok)'},
+  shp:{label:'形狀工具',color:'rgba(232,130,58,.12)',tc:'#e8823a'},
+  gd:{label:'參考線',color:'rgba(100,180,100,.12)',tc:'#64b464'},
+  ca:{label:'內容感知',color:'rgba(232,82,82,.12)',tc:'var(--err)'},
+  adj:{label:'調整圖層',color:'rgba(91,141,238,.12)',tc:'var(--acc)'},
+  fx:{label:'圖層樣式',color:'rgba(224,160,48,.12)',tc:'var(--warn)'},
+  grp:{label:'圖層群組',color:'rgba(76,203,113,.12)',tc:'var(--ok)'},
+  sel:{label:'選取複製',color:'rgba(160,100,220,.12)',tc:'#c080ff'},
+  clr:{label:'色彩模式',color:'rgba(232,82,82,.12)',tc:'var(--err)'},
+  smo:{label:'智慧型物件',color:'rgba(91,141,238,.12)',tc:'var(--acc)'},
+  msk:{label:'遮色片',color:'rgba(76,203,113,.12)',tc:'var(--ok)'},
+  new:{label:'開新檔案',color:'rgba(100,160,220,.12)',tc:'#64a0dc'}
+};
+const YDB=[
+  {id:1,cat:'lyr',q:'如圖使用的標誌已反轉，請將「最新追蹤標誌」水平翻轉。',steps:['圖層面板選取「最新追蹤標誌」圖層','選單「編輯」→「變形」→「水平翻轉」']},
+  {id:2,cat:'blend',q:'選取混合圖層並套用強烈光源混合模式，不透明度為 70％。',steps:['圖層面板選取「混合」圖層','混合模式改為「強烈光源」，不透明度設為 70％']},
+  {id:3,cat:'set',q:'修改 Photoshop 設定以確保每十五分鐘儲存一次復原資訊。',steps:['選單「編輯」→「偏好設定」→「檔案處理」','勾選「自動儲存修復資訊間隔」，設定為「15 分鐘」']},
+  {id:4,cat:'txt',q:'為客戶製作一張海報，在矩形內加入單一文字圖層，包含下列兩行文字：Turtle Beach、Maui',steps:['工具列點選「水平文字工具」在矩形內輸入兩行文字','選取兩行文字（點選文字圖層），上方屬性列輸入相關設定','點選「字元」面板，設定「行距」','想完美：同時選取文字與「矩形」圖層，設定水平與垂直居中']},
+  {id:5,cat:'txt',q:'設定成分圖層的行距，以符合過敏圖層的行距。',steps:['圖層面板選取「過敏」圖層','打開「字元」面板查看「過敏」圖層的行距','改選「成分」圖層，將行距改設為 10pt（過敏圖層的行距）']},
+  {id:6,cat:'set',q:'您的客戶要準備產品發表的廣告，請將中繼資料版權狀態修改為受版權保護。',steps:['選單「檔案」→「檔案資訊」','「版權狀態」改設為「版權所有」→「確定」']},
+  {id:7,cat:'shp',q:'在四邊利用參考線，新增獅子形狀，對獅子文字取樣色彩且不帶線條。',steps:['工具列點選「滴管」至獅子文字上吸取顏色','工具列改選「自訂形狀工具」（滑鼠左鍵按住可選隱藏工具）','上方選項列「形狀」下拉，選擇「獅子」圖形','在獅子文字下方拖曳出符合參考線大小的獅子圖形','上方選項列「筆畫」設定為「無色彩」']},
+  {id:8,cat:'gd',q:'在 100 像素位置放置水平參考線，140 像素位置放置垂直參考線。',steps:['選單「檢視」→「新增參考線」，分別新增水平（100px）與垂直（140px）參考線']},
+  {id:9,cat:'ca',q:'填滿影像上方的空白區域，使其與天空的其餘部分相符，確保手部沒有扭曲。',steps:['工具列「矩形選取工具」或「魔術棒」，選取影像上空白處','選單「編輯」→「內容感知填色」→確認後「確定」','選單「選取」→「取消選取」(Ctrl-D)']},
+  {id:10,cat:'adj',q:'在影像非破壞性地新增層級為 120 的臨界值調整，產生的影像應該像右圖一樣。',steps:['選單「圖層」→「新增調整圖層」→「臨界值」','在臨界值屬性面板中設定層級為 120']},
+  {id:11,cat:'fx',q:'將具有以下設定圖層樣式套用於文字天際線：平滑的外斜角、深度 200％、大小 7 像素。',steps:['圖層面板選取「天際線」圖層','圖層面板下方「增加圖層樣式」→「斜角與浮雕」','樣式：「外斜角」、技術：「平滑」、深度 200％、尺寸 7 像素']},
+  {id:12,cat:'grp',q:'建立名為「背景」的群組（含圖層背景#1、背景#2），以及名為「女孩和她的狗」的群組（含女孩、狗圖層），不要變更影像外觀。',steps:['Ctrl 鍵同時選取背景#1 和背景#2','圖層面板下方按「建立新群組」圖示，將群組改名為「背景」','重複步驟：選取女孩+狗圖層，建立群組改名為「女孩和她的狗」']},
+  {id:13,cat:'fx',q:'從名為沙龍的圖層拷貝圖層樣式，並套用於名為美髮的圖層。',steps:['點選沙龍圖層，在圖層上方按滑鼠右鍵→「拷貝圖層樣式」','改選美髮圖層，在圖層上方按滑鼠右鍵→「貼上圖層樣式」']},
+  {id:14,cat:'adj',q:'使用一個調整圖層，將「自然飽和度」與「飽和度」設定在 +30 到+80 之間。',steps:['選單「圖層」→「新增調整圖層」→「自然飽和度」','「自然飽和度」輸入 30、「飽和度」輸入 80']},
+  {id:15,cat:'grp',q:'隱藏畫布上除文字圖層外的所有圖層，不要變更透明度。',steps:['圖層面板「種類」右側，點選文字圖層（T）以外的其他種類','取消這些圖層左邊的「眼睛」（可見度）'],tip:'連續開/關眼睛技巧：從最上面圖層的眼睛，點滑鼠左鍵不放，往下滑到最下方圖層。'},
+  {id:16,cat:'clr',q:'此印刷傳單已針對網頁調整大小，變更為正確的色彩模式以便在線上發佈。請勿移除圖層。',steps:['選單「影像」→「模式」→改選「CMYK 色彩」','按「不要合併」'],note:'⚠️ 此題答案為 CMYK，表示讓印刷傳單回到正確的印刷用色彩模式，而非網頁用 RGB。'},
+  {id:17,cat:'sel',q:'選取標誌的黑色部分，複製並貼上到新圖層，但不變更文件的外觀。',steps:['工具「魔術棒」，選項「容許度」設 0、不勾選「連續的」','用魔術棒在標誌黑色處點滑鼠左鍵','按「Ctrl-J」將選取範圍複製至新圖層（Ctrl-C + Ctrl-V 也可）']},
+  {id:18,cat:'grp',q:'將剩餘未分組的圖層組合到名為 Dog 的群組中，該群組位於堆疊順序中的背景群組正上方。',steps:['用 Shift 或 Ctrl 鍵配合滑鼠選取剩餘未分組的圖層','圖層面板下方按「建立新群組」圖示，將群組改名為「Dog」']},
+  {id:19,cat:'clr',q:'使用於商業印刷的圖形是使用 Full HD 解析度建立的。改變圖形的色彩模式，使其適合在螢幕上觀看。請勿將圖層平面化。',steps:['選單「影像」→「模式」→改選「RGB 色彩」','按「不要合併」']},
+  {id:20,cat:'sel',q:'選取紅色花朵，拷貝並貼上到新圖層。',steps:['工具列「快速選取工具」，移動滑鼠選取紅色花朵','按「Ctrl-J」將選取範圍複製至新圖層（Ctrl-C + Ctrl-V 也可）'],tip:'快速選取工具技巧：配合選項「增加至選取範圍」與「從選取範圍減去」，以及設定適當的選取「尺寸」，可讓選取更精準。'},
+  {id:21,cat:'smo',q:'修改名為 Bella 的圖層，以使您可以套用非破壞性濾鏡。',steps:['選取 Bella 圖層，在圖層上按滑鼠右鍵→「轉換為智慧型物件」'],tip:'轉為智慧型物件後，所有濾鏡都會變成可修改的智慧型濾鏡，隨時可關閉或調整參數。'},
+  {id:22,cat:'fx',q:'將亮度立方體樣式預設集套用於文字（舊版預設樣式）。',steps:['選取文字圖層','選單「視窗」→「樣式」，叫出樣式面板','點選面板右上角功能表→「舊版樣式和更多」','從「所有舊版預設樣式」→「舊版預設樣式」找到「亮度立方體」點選套用']},
+  {id:23,cat:'gd',q:'建立三條參考線以指出文字 DENNIS ANCHORTON 的現場連線位置（文字開頭垂直線、頂端及底部水平線各一）。',steps:['確認「尺標」已顯示（選單「檢視」→「尺標」）','選取「DENNIS ANCHORTON」文字圖層，從水平尺標拖曳參考線至文字上方','選取「來自 SAN FRANCISCO」文字圖層，從水平尺標拖曳參考線至文字下方','從垂直尺標拖曳參考線至文字左側']},
+  {id:24,cat:'blend',q:'將柔光混合模式套用於混合圖層，不透明度調整為 55％。',steps:['選取「混合圖層」','將混合樣式（預設為「正常」）改選「柔光」','不透明度輸入「55」，調整為 55％']},
+  {id:25,cat:'txt',q:'將四種字元樣式設定套用於獵犬文字：微軟正黑體 Bold、72pt、色彩 FF0002。',steps:['選取「獵犬」文字圖層','選單「視窗」→「字元」，顯示字元面板','設定字體：微軟正黑體、粗細：Bold、大小：72pt、顏色：#FF0002']},
+  {id:26,cat:'shp',q:'建立一個具有 6 項特徵的圓角矩形：寬 700px、高 1280px、轉角半徑 30px、填滿白色、筆劃黑色 6px、對齊文件水平與垂直居中。',steps:['工具列選「圓角矩形」工具','在畫布上點一下，設定寬 700、高 1280、轉角半徑 30→「確定」','選項列設定填滿白色、筆劃黑色 6px','選項列→「路徑對齊方式」→「畫布」→對齊「水平居中」→對齊「垂直居中」']},
+  {id:27,cat:'grp',q:'將名為蘇克桑山的圖層移到名為邊框的群組中，以便顯示文字。',steps:['點選「蘇克桑山」圖層','用滑鼠拖曳，移至「邊框」群組裡「邊界」圖層上方']},
+  {id:28,cat:'ca',q:'使用內容感知方法移除背景游泳者，請勿變更文件尺寸。',steps:['用「套索」工具或「矩形選取工具」，框選背景游泳者','選單「編輯」→「填滿」→內容：「內容感知」→「確定」']},
+  {id:29,cat:'ca',q:'請移除影像左側的損壞區域來修復照片。',steps:['工具列選「修補工具」，用滑鼠畫出要修復的選取範圍','將要修復的區域拖曳至上方相同背景的參考範圍']},
+  {id:30,cat:'msk',q:'建立一個遮色片，非破壞性地顯示建築物並隱藏天空。',steps:['用「魔術棒」或「快速選取工具」選取天空','選單「選取」→「反轉」，改選建築物','圖層面板下方（右 5），按「增加遮色片」按鈕']},
+  {id:31,cat:'msk',q:'鎖定位置。在圖層面板上，僅鎖定經文字剪裁遮色片後的影像圖層的位置選項。',steps:['選取「圖層 1」（咖啡文字圖層上方的剪裁遮色片圖層）','上方「鎖定」列點選「鎖定位置」（左 3 圖示）']},
+  {id:32,cat:'new',nm:true,q:'建立一個名為海報的小報用紙（Tabloid）尺寸橫向文件，用於商業印刷。其他設定保留預設值。',steps:['選單「檔案」→「開新檔案」(Ctrl-N)','上方類別選「列印」→「小報用紙」','右側輸入檔名「海報」、方向：橫向、色彩模式：CMYK']},
+  {id:33,cat:'new',nm:true,q:'建立一份橫向 A4 文件以供列印，使用每英吋 360 像素（ppi）的解析度，將文件命名為 landscape。',steps:['選單「檔案」→「開新檔案」(Ctrl-N)','上方類別選「列印」→「A4」','輸入檔名「landscape」、方向：橫向、色彩模式：CMYK、解析度：360 像素/英吋']},
+  {id:34,cat:'new',nm:true,q:'設定 Photoshop 以確保所有轉存的影像都包含版權與聯絡資訊。',steps:['選單「檔案」→「轉存」→「轉存偏好設定」','中間「快速轉存中繼資料」選「版權與聯絡資訊」→「確定」']},
+  {id:35,cat:'new',nm:true,q:'使用預設黑色背景的 HDV/HDTV 720p，建立新的視訊和影片文件。將檔案命名為 Title。',steps:['選單「檔案」→「開新檔案」(Ctrl-N)','上方類別選「影片和視訊」→「HDV/HDTV 720p」','輸入檔名「Title」、背景內容改為「黑色」']}
+];
+
+let yorkMastered=new Set();
+function buildYorkAccordion(filterCat){
+  const c=document.getElementById('york-accordion');
+  const items=filterCat?YDB.filter(q=>q.cat===filterCat):YDB;
+  c.innerHTML=items.map(q=>{
+    const ci=YORK_CATS[q.cat];
+    return`<div class="acc-item" id="york-q${q.id}">
+      <div class="acc-head" onclick="toggleYork(${q.id})">
+        <div class="acc-num op" style="background:${ci.color};color:${ci.tc}">Y${q.id}</div>
+        <div class="acc-q">${q.q.length>58?q.q.slice(0,58)+'…':q.q}</div>
+        ${q.nm?'<div class="nm-badge">無需素材</div>':''}
+        <div class="acc-tag" style="background:${ci.color};color:${ci.tc};border-color:${ci.tc}30">${ci.label}</div>
+        <div class="acc-arr">▶</div>
+      </div>
+      <div class="acc-body">
+        <div class="abi">
+          ${q.note?`<div class="york-note">${q.note}</div>`:''}
+          <div class="york-steps">${q.steps.map((s,i)=>`<div class="york-step"><div class="york-step-n">${i+1}</div><div>${s}</div></div>`).join('')}</div>
+          ${q.tip?`<div class="york-tip">${q.tip}</div>`:''}
+          <button class="btn-mastered${yorkMastered.has(q.id)?' on':''}" id="ym-${q.id}" onclick="toggleMastered(${q.id})">${yorkMastered.has(q.id)?'已掌握 ✓':'我會了 ✓'}</button>
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+}
+function toggleYork(id){document.getElementById('york-q'+id).classList.toggle('open');}
+function toggleMastered(id){
+  if(yorkMastered.has(id))yorkMastered.delete(id);
+  else yorkMastered.add(id);
+  const btn=document.getElementById('ym-'+id);
+  btn.classList.toggle('on',yorkMastered.has(id));
+  btn.textContent=yorkMastered.has(id)?'已掌握 ✓':'我會了 ✓';
+  const n=yorkMastered.size,t=YDB.length;
+  document.getElementById('york-prog-txt').textContent=`${n} / ${t}`;
+  document.getElementById('york-fill').style.width=`${(n/t)*100}%`;
+}
+function buildYorkFilters(){
+  const cats=[...new Set(YDB.map(q=>q.cat))];
+  const f=document.getElementById('york-filters');
+  f.innerHTML=`<button class="yf active" onclick="filterYork(null,this)">全部（35）</button>`+
+  cats.map(c=>{
+    const ci=YORK_CATS[c];
+    const cnt=YDB.filter(q=>q.cat===c).length;
+    return`<button class="yf" onclick="filterYork('${c}',this)" style="--yf-c:${ci.tc}">${ci.label}（${cnt}）</button>`;
+  }).join('');
+}
+function filterYork(cat,el){
+  document.querySelectorAll('.yf').forEach(b=>b.classList.remove('active'));
+  el.classList.add('active');
+  buildYorkAccordion(cat);
+}
+
+// ──────────────── INIT ────────────────
+buildAccordion();
+buildYorkAccordion();
+buildYorkFilters();
+</script>
+</body>
+</html>
